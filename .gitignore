@@ -13,6 +13,7 @@
 *.userprefs
 *.pidb
 *.booproj
+Assets/StandAlones/CircleTimer/Materials/CircleHpBar2.mat
 
 # Unity3D generated meta files
 *.pidb.meta
