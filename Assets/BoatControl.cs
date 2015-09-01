@@ -17,8 +17,9 @@ public class BoatControl : MonoBehaviour {
 	float lerpTime = .7f, lerpTimer, currAngle, endAngle;
 	int lastDirectionTurned = 0;
 	bool hasCurAngleBeenSet = false;
-	int indexPOS = 0;
+	public int indexPOS = 0;
 	int maxIndex;
+	public Text showCurrentPOS;
 	public static BoatControl s_instance;
 	void Awake() {
 		if (s_instance == null) {
@@ -33,7 +34,7 @@ public class BoatControl : MonoBehaviour {
 		return allPoints[indexPOS].sailTitle;
 	}
 
-	List<pointOfSail> allPoints = new List<pointOfSail>();
+	public List<pointOfSail> allPoints = new List<pointOfSail>();
 	
 	bool playerHasControl, pointsOfSailMode, allRangeMode;
 	// Use this for initialization
@@ -50,8 +51,6 @@ public class BoatControl : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-
-
 		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL____________________________________________________________________________________________
 		if (isLerpingAngle) {
 			float fracJourney = (Time.time - lerpTimer)/lerpTime;

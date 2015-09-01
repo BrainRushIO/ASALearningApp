@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour {
 	public Timer1 timer;
 	public Text currentQuestion;
 	public Slider masteryMeter;
+	public Text wrongAnswerText;
+	public Text correctText;
 
 	public static GameManager s_instance;
 	void Awake() {
@@ -82,7 +84,8 @@ public class GameManager : MonoBehaviour {
 			gameState = GameState.Playing;
 			break;
 		case GameState.Playing :
-			if (Input.GetKey(KeyCode.KeypadEnter)){ //when boat has been rotated
+			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
+				print("ENTER");
 				gameState = GameState.CheckAnswer;
 			}
 			break;
@@ -133,6 +136,9 @@ public class GameManager : MonoBehaviour {
 	}
 	void WinRound(){}
 	bool AnswerCorrect(){
+		wrongAnswerText.enabled = false;
+		correctText.enabled = true;
+		correctText.GetComponent<Fader>().StartFadeOut();
 		listOfPOSTerms[randomListPoints[currIndex].initIndex].mastery+=1;
 		AdjustMasteryMeter(true);
 		if (masteryMeter.value > .97f ) {
@@ -146,11 +152,14 @@ public class GameManager : MonoBehaviour {
 		AdjustMasteryMeter(false);
 		timer.timesUp = true;
 		timer.pause = true;
-
+		DisplayFeedbackText();
 	}
 
 	void DisplayFeedbackText () {
 		//Nope, you selected this position, try again
+		wrongAnswerText.enabled = true;
+		BoatControl.s_instance.showCurrentPOS.text = "Incorrect, you selected: " + BoatControl.s_instance.allPoints[BoatControl.s_instance.indexPOS].sailTitle.Replace("|"," ");
+
 	}
 	void GotoNextModule(){}
 
