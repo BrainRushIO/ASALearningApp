@@ -12,7 +12,6 @@ public class pointOfSail{
 	}
 };
 public class BoatControl : MonoBehaviour {
-	public Text debug;
 	public TextAsset pointsOfSailTxt;
 	bool isLerpingAngle = false;
 	float lerpTime = .7f, lerpTimer, currAngle, endAngle;
@@ -54,7 +53,6 @@ public class BoatControl : MonoBehaviour {
 
 
 		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL____________________________________________________________________________________________
-		debug.text = allPoints[indexPOS].sailTitle;
 		if (isLerpingAngle) {
 			float fracJourney = (Time.time - lerpTimer)/lerpTime;
 			transform.rotation = Quaternion.Lerp (Quaternion.Euler(0, currAngle,0),Quaternion.Euler(0, allPoints[indexPOS].angle,0), fracJourney);
