@@ -20,6 +20,19 @@ public class BoatControl : MonoBehaviour {
 	bool hasCurAngleBeenSet = false;
 	int indexPOS = 0;
 	int maxIndex;
+	public static BoatControl s_instance;
+	void Awake() {
+		if (s_instance == null) {
+			s_instance = this;
+		}
+		else {
+			Destroy(gameObject);
+		}
+	}
+
+	public string ReturnCurrPointOfSail(){
+		return allPoints[indexPOS].sailTitle;
+	}
 
 	List<pointOfSail> allPoints = new List<pointOfSail>();
 	
@@ -38,19 +51,19 @@ public class BoatControl : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+
+
+		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL____________________________________________________________________________________________
 		debug.text = allPoints[indexPOS].sailTitle;
 		if (isLerpingAngle) {
 			float fracJourney = (Time.time - lerpTimer)/lerpTime;
 			transform.rotation = Quaternion.Lerp (Quaternion.Euler(0, currAngle,0),Quaternion.Euler(0, allPoints[indexPOS].angle,0), fracJourney);
-
 			if (fracJourney > .99f) {
 				fracJourney = 1f;
 				transform.rotation = Quaternion.Lerp (Quaternion.Euler(0, currAngle,0),Quaternion.Euler(0, allPoints[indexPOS].angle,0), fracJourney);
 				isLerpingAngle = false;
 				currAngle = allPoints[indexPOS].angle;
-				
 			}
-
 		}
 
 		if (!isLerpingAngle && playerHasControl) {
@@ -72,10 +85,9 @@ public class BoatControl : MonoBehaviour {
 					indexPOS--;
 				}
 				StartLerp();
-
-				
 			}
 
 		}
+		//______________________________________________________________________________________________________________________________________________
 	}
 }
