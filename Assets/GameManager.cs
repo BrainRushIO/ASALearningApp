@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	void InitiateTerm(){
-		currentQuestion.text = "Rotate the boat to " + randomListPoints[currIndex].pointOfSailAnswer;
+		currentQuestion.text = "Rotate the boat to " + randomListPoints[currIndex].pointOfSailAnswer.Replace("|"," ");
 		timer.Reset(25f);
 	}
 	void WinRound(){}
