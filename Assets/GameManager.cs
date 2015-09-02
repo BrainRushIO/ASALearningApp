@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	public enum GameState {Idle, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen};
+	public enum GameState {Idle, Review, Instructions, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen};
 	public GameState gameState;
 	public List<Term> listOfPOSTerms,tempListPointTerms,randomListPoints;
 	List<pointOfSail> allPoints;
@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
 	int currIndex = 0;
 	float currMastery;
 	int totalMastery;
+
+	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage;
 
 	public Timer1 timer;
 	public Text currentQuestion;
@@ -42,7 +44,23 @@ public class GameManager : MonoBehaviour {
 		print (gameState);
 		switch (gameState) {
 		case GameState.Idle :
-			if (readyToConfigure){
+			if (Input.GetKeyDown(KeyCode.Space)){
+				IdlePage.SetActive(false);
+				ReviewPage.SetActive(true);
+				gameState = GameState.Review;
+			}
+			break;
+		case GameState.Review :
+			if (Input.GetKeyDown(KeyCode.Space)){
+				ReviewPage.SetActive(false);
+				InstructionsPage.SetActive(true);
+				gameState = GameState.Instructions;
+			}
+			break;
+		case GameState.Instructions :
+			if (Input.GetKeyDown(KeyCode.Space)){
+				InstructionsPage.SetActive(false);
+				GameplayPage.SetActive(true);
 				gameState = GameState.Config;
 			}
 			break;
