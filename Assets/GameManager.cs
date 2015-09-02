@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
 			}
 
 			totalMastery = requiredMastery * listOfPOSTerms.Count;
-
+			print(totalMastery + " tote mast " + listOfPOSTerms.Count + "count");
 			gameState = GameState.Intro;
 			break;
 			
@@ -157,7 +157,6 @@ public class GameManager : MonoBehaviour {
 		wrongAnswerText.enabled = false;
 		correctText.enabled = true;
 		correctText.GetComponent<Fader>().StartFadeOut();
-		listOfPOSTerms[randomListPoints[currIndex].initIndex].mastery+=1;
 		AdjustMasteryMeter(true);
 		if (masteryMeter.value > .97f ) {
 			return true;
@@ -186,6 +185,7 @@ public class GameManager : MonoBehaviour {
 		if (didAnswerCorrect && !timer.timesUp) {
 			
 			listOfPOSTerms[randomListPoints[currIndex].initIndex].mastery += 1;
+			print ("mastery added");
 		}
 		
 		else if (!didAnswerCorrect) {
@@ -204,6 +204,7 @@ public class GameManager : MonoBehaviour {
 			currMastery+=x.mastery;
 		}
 		masteryMeter.value = (float)(currMastery)/totalMastery;
+		print (totalMastery + "tote mastery " + currMastery + " curr Mastery");
 	}
 
 

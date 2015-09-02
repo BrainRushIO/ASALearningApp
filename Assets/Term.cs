@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Term {
 
-	public int mastery;
+	public int mastery = 0;
 	public string pointOfSailAnswer;
 	public int initIndex;
 
