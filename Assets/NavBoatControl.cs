@@ -1,40 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
-public class AutoSailAdjust : MonoBehaviour {
+public class NavBoatControl : MonoBehaviour {
 
-	public Text angleWRTWindDebug,angleWRTWindDebug2;
+	Rigidbody body;
+	float currThrust;
 	public enum BoatSideFacingWind {Port, Starboard};
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	float angleToAdjustTo;
 	float angleWRTWind;
 	Vector3 boatDirection;
-	public GameObject boat;
 	bool isJibing;
 	float smoothRate = 1f;
-
-	// Use this for initialization
-	void Start () {
+	float turnStrength = 1000f;
 	
+
+	void Start () {
+		body = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//figure out angular relation ship between boat and wind
-		Vector3 localTarget = boat.transform.InverseTransformPoint(directionWindComingFrom);
+		Vector3 localTarget = transform.InverseTransformPoint(directionWindComingFrom);
 		//isNegative lets us know port vs starboard
 		float isNegative = Mathf.Atan2(localTarget.x, localTarget.z)/Mathf.Abs(Mathf.Atan2(localTarget.x, localTarget.z));
-		boatDirection = boat.transform.forward;
+		boatDirection = transform.forward;
 		angleWRTWind = Vector3.Angle(boatDirection,directionWindComingFrom) * isNegative;
 		if (float.IsNaN(angleWRTWind)) {
 			angleWRTWind=0;
 		}
-//		transform.localRotation = Quaternion.Euler(0,angleWRTWind/2,0);
-		transform.rotation = Quaternion.Lerp(Quaternion.identity, boat.transform.rotation, 0.5f);
+
+		if(Input.GetKey(KeyCode.LeftArrow)) {
+			body.AddRelativeTorque (-Vector3.up*turnStrength);
+
+		}
+
+		if(Input.GetKey(KeyCode.RightArrow)) {
+			body.AddRelativeTorque (Vector3.up*turnStrength);
+
+		}
+
 	}
 
 	void FixedUpdate () {
+		//make thrust proportionate to dist WRT to wind
+		body.AddForce (transform.forward * ReturnCurrentThrust());
+	}
 
+	float ReturnCurrentThrust() {
+		return 0f;
 	}
 }
