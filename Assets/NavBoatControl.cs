@@ -12,7 +12,7 @@ public class NavBoatControl : MonoBehaviour {
 	Vector3 boatDirection;
 	bool isJibing;
 	float smoothRate = 1f;
-	float turnStrength = 1000f;
+	float turnStrength = 10f;
 	
 
 	void Start () {
@@ -46,9 +46,10 @@ public class NavBoatControl : MonoBehaviour {
 	void FixedUpdate () {
 		//make thrust proportionate to dist WRT to wind
 		body.AddForce (transform.forward * ReturnCurrentThrust());
+		Debug.DrawRay(transform.position, transform.forward,Color.white);
 	}
 
 	float ReturnCurrentThrust() {
-		return 0f;
+		return 100f;
 	}
 }
