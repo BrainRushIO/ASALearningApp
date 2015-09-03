@@ -12,7 +12,7 @@ public class NavBoatControl : MonoBehaviour {
 	Vector3 boatDirection;
 	bool isJibing;
 	float smoothRate = 1f;
-	float turnStrength = 10f;
+	float turnStrength = 100f;
 	
 
 	void Start () {
@@ -50,6 +50,6 @@ public class NavBoatControl : MonoBehaviour {
 	}
 
 	float ReturnCurrentThrust() {
-		return 100f;
+		return 1000f;
 	}
 }
