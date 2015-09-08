@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
 	int currIndex = 0;
 	float currMastery;
 	int totalMastery;
+	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
 
 	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage;
 
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour {
 			}
 			break;
 		case GameState.Config :
+			directionOfWind = new Vector3(0,0,1f);
 			allPoints = new List<pointOfSail>();
 			allPoints = TextParser.Parse(pointsOfSailTxt);
 			listOfPOSTerms = new List<Term>();
@@ -86,7 +88,6 @@ public class GameManager : MonoBehaviour {
 			}
 
 			totalMastery = requiredMastery * listOfPOSTerms.Count;
-			print(totalMastery + " tote mast " + listOfPOSTerms.Count + "count");
 			gameState = GameState.Intro;
 			break;
 			

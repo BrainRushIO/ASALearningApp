@@ -10,6 +10,9 @@ public class RotationLock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.rotation = Quaternion.identity;
+		float angleOfWindWRTIdentity;
+		angleOfWindWRTIdentity = Vector3.Angle(Vector3.forward, WindManager.s_instance.directionOfWind);
+		print ("wind angle " + angleOfWindWRTIdentity);
+		transform.rotation = Quaternion.Euler(new Vector3(0, angleOfWindWRTIdentity, 0) + new Vector3(0,45f,0));
 	}
 }

@@ -20,6 +20,10 @@ public class BoatControl : MonoBehaviour {
 	public int indexPOS = 0;
 	int maxIndex;
 	public Text showCurrentPOS;
+
+	float spawnTimerDuration = 3f;
+	float spawnTimer;
+
 	public static BoatControl s_instance;
 	void Awake() {
 		if (s_instance == null) {
@@ -52,6 +56,11 @@ public class BoatControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL____________________________________________________________________________________________
+
+		if (spawnTimer > spawnTimerDuration) {
+
+		}
+
 		if (isLerpingAngle) {
 			float fracJourney = (Time.time - lerpTimer)/lerpTime;
 			transform.rotation = Quaternion.Lerp (Quaternion.Euler(0, currAngle,0),Quaternion.Euler(0, allPoints[indexPOS].angle,0), fracJourney);

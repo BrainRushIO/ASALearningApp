@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class AutoSailAdjust : MonoBehaviour {
 
 	public Text angleWRTWindDebug,angleWRTWindDebug2;
-	public enum BoatSideFacingWind {Port, Starboard};
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	float angleToAdjustTo;
 	float angleWRTWind;
@@ -21,6 +20,7 @@ public class AutoSailAdjust : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		directionWindComingFrom = GameManager.s_instance.directionOfWind;
 		//figure out angular relation ship between boat and wind
 		Vector3 localTarget = boat.transform.InverseTransformPoint(directionWindComingFrom);
 		//isNegative lets us know port vs starboard

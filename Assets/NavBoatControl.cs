@@ -6,14 +6,17 @@ public class NavBoatControl : MonoBehaviour {
 	Rigidbody body;
 	float currThrust;
 	public enum BoatSideFacingWind {Port, Starboard};
-	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	float angleToAdjustTo;
 	float angleWRTWind;
 	Vector3 boatDirection;
 	bool isJibing;
 	float smoothRate = 1f;
 	float turnStrength = 100f;
-	
+
+	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
+	public GameObject mast;
+	public GameObject redNavObj, greenNavObj;
+	public Transform red1,red2,green1,green2;
 
 	void Start () {
 		body = GetComponent<Rigidbody>();
@@ -21,6 +24,10 @@ public class NavBoatControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		directionWindComingFrom = WindManager.s_instance.directionOfWind;
+	
+
+
 		//figure out angular relation ship between boat and wind
 		Vector3 localTarget = transform.InverseTransformPoint(directionWindComingFrom);
 		//isNegative lets us know port vs starboard
@@ -30,6 +37,8 @@ public class NavBoatControl : MonoBehaviour {
 		if (float.IsNaN(angleWRTWind)) {
 			angleWRTWind=0;
 		}
+
+		mast.transform.rotation = Quaternion.Lerp(Quaternion.identity, transform.rotation, 0.5f);
 
 		if(Input.GetKey(KeyCode.LeftArrow)) {
 			body.AddRelativeTorque (-Vector3.up*turnStrength);
