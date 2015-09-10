@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class TackPathObj : MonoBehaviour {
-
-	public bool reverseDirection;
-	public Vector3 target;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -12,7 +10,8 @@ public class TackPathObj : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(transform.forward);
+		transform.Translate (transform.forward);
+		print (transform.forward);
 	}
-	
+
 }
