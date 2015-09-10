@@ -13,6 +13,7 @@ public class NavBoatControl : MonoBehaviour {
 	float smoothRate = 1f;
 	float turnStrength = 100f;
 	public static NavBoatControl s_instance;
+	bool isNoSailZone;
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	public GameObject mast;
@@ -60,15 +61,25 @@ public class NavBoatControl : MonoBehaviour {
 
 		}
 
+		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < 30f) {
+			isNoSailZone = true;
+		}
+		else {
+			isNoSailZone = false;
+			print ("WE GOT WIND!");
+		}
+
 	}
 
 	void FixedUpdate () {
 		//make thrust proportionate to dist WRT to wind
-		body.AddForce (transform.forward * ReturnCurrentThrust());
+		if (!isNoSailZone) {
+			body.AddForce (transform.forward * ReturnCurrentThrust());
+		}
 		Debug.DrawRay(transform.position, transform.forward,Color.white);
 	}
 
 	float ReturnCurrentThrust() {
-		return 1000f;
+		return 5000f;
 	}
 }
