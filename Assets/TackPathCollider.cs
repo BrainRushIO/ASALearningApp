@@ -9,7 +9,7 @@ public class TackPathCollider : MonoBehaviour {
 	Vector3 currentIntersectionPointRed, currentIntersectionPointGreen;
 	float spawnTimer, spawnFrequency = .5f;
 	int currLayerMask;
-
+	LineRenderer thisLineRenderer;
 
 	void Start () {
 		spawnTimer = Time.time;
@@ -20,7 +20,7 @@ public class TackPathCollider : MonoBehaviour {
 			currLayerMask = 1 << LayerMask.NameToLayer("Target");
 		}
 		currLayerMask = ~currLayerMask;
-
+		thisLineRenderer = GetComponent<LineRenderer>();
 	}
 
 
@@ -29,9 +29,6 @@ public class TackPathCollider : MonoBehaviour {
 
 		//shoot 4 raycasts in the directions of 45 + 90 + 90 + 90 to the direction of wind
 		float yRotationWindValue = Vector3.Angle (Vector3.forward, WindManager.s_instance.directionOfWind);
-
-
-
 
 		for (int i = 0; i < 4; i++) {
 
@@ -47,18 +44,15 @@ public class TackPathCollider : MonoBehaviour {
 				}
 			}
 		}
-		if (Time.time - spawnTimer > spawnFrequency) {
-			GameObject temp;
-			if (isRed) {
-				temp = Instantiate(redPathCube,transform.position, Quaternion.identity) as GameObject;
-				temp.transform.LookAt(currentIntersectionPointGreen);
 
-			}
-			else {
-				temp = Instantiate(greenPathCube,transform.position, Quaternion.identity) as GameObject;
-				temp.transform.LookAt(currentIntersectionPointRed);
-			}
-			spawnTimer = Time.time;
+		if (isRed) {
+			thisLineRenderer.SetPosition(0, transform.position);
+			thisLineRenderer.SetPosition(1, currentIntersectionPointRed);
+		}
+		else {
+			thisLineRenderer.SetPosition(0, transform.position);
+			thisLineRenderer.SetPosition(1, currentIntersectionPointGreen);
+
 		}
 	}
 
