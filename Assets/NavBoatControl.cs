@@ -12,6 +12,7 @@ public class NavBoatControl : MonoBehaviour {
 	bool isJibing;
 	float smoothRate = 1f;
 	float turnStrength = 100f;
+	public static NavBoatControl s_instance;
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	public GameObject mast;
@@ -21,7 +22,16 @@ public class NavBoatControl : MonoBehaviour {
 	void Start () {
 		body = GetComponent<Rigidbody>();
 	}
-	
+
+	void Awake() {
+		if (s_instance == null) {
+			s_instance = this;
+		}
+		else {
+			Destroy(gameObject);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		directionWindComingFrom = WindManager.s_instance.directionOfWind;
