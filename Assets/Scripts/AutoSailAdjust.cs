@@ -11,7 +11,6 @@ public class AutoSailAdjust : MonoBehaviour {
 	Vector3 boatDirection;
 	public GameObject boat;
 	bool isJibing;
-	float smoothRate = 1f;
 
 	// Use this for initialization
 	void Start () {

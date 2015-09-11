@@ -7,12 +7,10 @@ public class TackPathCollider : MonoBehaviour {
 	public bool isRed;
 	public bool isPlayer;
 	Vector3 currentIntersectionPointRed, currentIntersectionPointGreen;
-	float spawnTimer, spawnFrequency = .5f;
 	int currLayerMask;
 	LineRenderer thisLineRenderer;
 
 	void Start () {
-		spawnTimer = Time.time;
 		if (isPlayer) {
 			currLayerMask = 1 << LayerMask.NameToLayer("Player");
 		}

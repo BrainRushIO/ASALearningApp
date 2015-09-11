@@ -4,18 +4,18 @@ using System.Collections;
 public class NavBoatControl : MonoBehaviour {
 
 	Rigidbody body;
-	float currThrust;
+	public float currThrust = 500;
 	public enum BoatSideFacingWind {Port, Starboard};
 	float angleToAdjustTo;
 	float angleWRTWind, lastAngleWRTWind;
-	Quaternion lerpStart, lerpEnd, previousRotation;
+	Quaternion lerpStart, lerpEnd;
 	float lerpTimer, lerpDuration=1f;
 	Vector3 boatDirection;
 	bool isJibing = false;
-	float smoothRate = 1f;
-	float turnStrength = 100f;
+	float turnStrength = 100f, weakTurnStrength = 100f, strongTurnStrength = 100f;
 	public static NavBoatControl s_instance;
 	bool isNoSailZone;
+	public bool canMove = false;
 
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
@@ -87,19 +87,21 @@ public class NavBoatControl : MonoBehaviour {
 			}
 
 		}
-		previousRotation = transform.rotation;
 
 
 		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < 30f) {
 			isNoSailZone = true;
+			turnStrength = weakTurnStrength;
 		}
 		else {
 			isNoSailZone = false;
+			turnStrength = strongTurnStrength;
 		}
 
 	}
 
 	void FixedUpdate () {
+		if (canMove) {
 		if(Input.GetKey(KeyCode.LeftArrow)) {
 			//todo put this in a function that gets called in fixedUpdate, also add in rudder steering
 			body.AddRelativeTorque (-Vector3.up*turnStrength);
@@ -114,7 +116,7 @@ public class NavBoatControl : MonoBehaviour {
 		if (!isNoSailZone) {
 			body.AddForce (transform.forward * ReturnCurrentThrust());
 		}
-		Debug.DrawRay(transform.position, transform.forward,Color.white);
+		}
 	}
 
 	void Jibe(float negative) {
@@ -125,7 +127,13 @@ public class NavBoatControl : MonoBehaviour {
 
 	}
 
+	void OnTriggerEnter(Collider other) {
+		if (other.tag == "NavTarget" && other.name == NavManager.s_instance.ReturnCurrNavPointName() && Vector3.Distance(transform.position, other.transform.position) <10f) {
+			NavManager.s_instance.SwitchNavigationPoint();
+		}
+	}
+
 	float ReturnCurrentThrust() {
-		return 5000f;
+		return currThrust;
 	}
 }
