@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 	int totalMastery;
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
 
-	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage;
+	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage, winPage;
 
 	public Timer1 timer;
 	public Text currentQuestion;
@@ -104,7 +104,6 @@ public class GameManager : MonoBehaviour {
 			break;
 		case GameState.Playing :
 			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
-				print("ENTER");
 				gameState = GameState.CheckAnswer;
 			}
 			break;
@@ -134,6 +133,8 @@ public class GameManager : MonoBehaviour {
 			break;
 			
 		case GameState.WinScreen :
+			GameplayPage.SetActive(false);
+			winPage.SetActive(true);
 			if ((Time.time - startTime) > exitTime) {
 				GotoNextModule();
 			}
@@ -179,7 +180,9 @@ public class GameManager : MonoBehaviour {
 		BoatControl.s_instance.showCurrentPOS.text = "Incorrect, you selected: " + BoatControl.s_instance.allPoints[BoatControl.s_instance.indexPOS].sailTitle.Replace("|"," ");
 
 	}
-	void GotoNextModule(){}
+	void GotoNextModule(){
+		Application.LoadLevel(1);
+	}
 
 	void AdjustMasteryMeter(bool didAnswerCorrect) {
 		
