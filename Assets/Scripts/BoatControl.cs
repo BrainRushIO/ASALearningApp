@@ -15,15 +15,9 @@ public class BoatControl : MonoBehaviour {
 	public TextAsset pointsOfSailTxt;
 	bool isLerpingAngle = false;
 	float lerpTime = .7f, lerpTimer, currAngle, endAngle;
-	int lastDirectionTurned = 0;
-	bool hasCurAngleBeenSet = false;
 	public int indexPOS = 0;
 	int maxIndex;
 	public Text showCurrentPOS;
-
-	float spawnTimerDuration = 3f;
-	float spawnTimer;
-
 	public static BoatControl s_instance;
 	void Awake() {
 		if (s_instance == null) {
@@ -55,12 +49,7 @@ public class BoatControl : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL____________________________________________________________________________________________
-
-		if (spawnTimer > spawnTimerDuration) {
-
-		}
-
+		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL___________________________________________________________________________________________
 		if (isLerpingAngle) {
 			float fracJourney = (Time.time - lerpTimer)/lerpTime;
 			transform.rotation = Quaternion.Lerp (Quaternion.Euler(0, currAngle,0),Quaternion.Euler(0, allPoints[indexPOS].angle,0), fracJourney);
@@ -73,7 +62,6 @@ public class BoatControl : MonoBehaviour {
 		}
 
 		if (!isLerpingAngle && playerHasControl) {
-			hasCurAngleBeenSet = false;
 			if(Input.GetKeyDown(KeyCode.LeftArrow)) {
 				if(indexPOS == maxIndex) {
 					indexPOS = 0;

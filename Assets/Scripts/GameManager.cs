@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour {
 	public List<Term> listOfPOSTerms,tempListPointTerms,randomListPoints;
 	List<pointOfSail> allPoints;
 	public TextAsset pointsOfSailTxt;
-	bool readyToConfigure = true, userClickedStart = true;
+	bool userClickedStart = true;
 	int requiredMastery = 2;
-	float startTime, exitTime =3f;
+	float startTime = 3f, exitTime =3f;
 	int currIndex = 0;
 	float currMastery;
 	int totalMastery;
