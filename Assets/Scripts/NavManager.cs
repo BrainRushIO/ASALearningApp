@@ -11,6 +11,7 @@ public class NavManager : MonoBehaviour {
 	public bool hasReachedAllTargets;
 	int currNavPoint = 0;
 	public Text currTarget;
+	public AudioSource beep;
 
 
 	void Awake() {
@@ -53,6 +54,8 @@ public class NavManager : MonoBehaviour {
 				idlePage.SetActive(false);
 				reviewPage.SetActive(true);
 				gameState = GameState.Review;
+				beep.Play();
+
 			}
 			break;
 		case GameState.Review :
@@ -60,6 +63,8 @@ public class NavManager : MonoBehaviour {
 				reviewPage.SetActive(false);
 				instructionsPage.SetActive(true);
 				gameState = GameState.Instructions;
+				beep.Play();
+
 			}
 			break;
 		case GameState.Instructions :
@@ -68,6 +73,8 @@ public class NavManager : MonoBehaviour {
 				gameState = GameState.Gameplay;
 				NavBoatControl.s_instance.canMove = true;
 				gamePlayPage.SetActive(true);
+				beep.Play();
+
 			}
 			break;
 		case GameState.Gameplay :
