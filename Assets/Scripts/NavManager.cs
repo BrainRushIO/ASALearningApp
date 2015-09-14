@@ -12,7 +12,8 @@ public class NavManager : MonoBehaviour {
 	int currNavPoint = 0;
 	public Text currTarget;
 	public AudioSource beep;
-
+	float startTime, elapsedTime;
+	public Text timeText;
 
 	void Awake() {
 		if (s_instance == null) {
@@ -74,7 +75,7 @@ public class NavManager : MonoBehaviour {
 				NavBoatControl.s_instance.canMove = true;
 				gamePlayPage.SetActive(true);
 				beep.Play();
-
+				StartClock();
 			}
 			break;
 		case GameState.Gameplay :
@@ -83,7 +84,10 @@ public class NavManager : MonoBehaviour {
 				NavBoatControl.s_instance.canMove = false;
 				break;
 			}
+			elapsedTime = Time.time - startTime;
 			currTarget.text = "Your current destination is: " + navigationPoints[currNavPoint].name;
+			timeText.text = "Elapsed time: " + elapsedTime.ToString("F2") + "s";
+			                                   
 			break;
 		case GameState.Win :
 			break;
@@ -91,7 +95,7 @@ public class NavManager : MonoBehaviour {
 
 	}
 
-	void FixedUpdate() {
-
+	void StartClock() {
+		startTime = Time.time;
 	}
 }
