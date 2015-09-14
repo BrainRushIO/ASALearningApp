@@ -16,6 +16,7 @@ public class NavBoatControl : MonoBehaviour {
 	public static NavBoatControl s_instance;
 	bool isNoSailZone;
 	public bool canMove = false;
+	public AudioSource correct;
 
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
@@ -129,6 +130,7 @@ public class NavBoatControl : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "NavTarget" && other.name == NavManager.s_instance.ReturnCurrNavPointName() && Vector3.Distance(transform.position, other.transform.position) <10f) {
 			NavManager.s_instance.SwitchNavigationPoint();
+			correct.Play();
 		}
 	}
 

@@ -14,10 +14,11 @@ public class pointOfSail{
 public class BoatControl : MonoBehaviour {
 	public TextAsset pointsOfSailTxt;
 	bool isLerpingAngle = false;
-	float lerpTime = .7f, lerpTimer, currAngle, endAngle;
+	float lerpTime = .3f, lerpTimer, currAngle, endAngle;
 	public int indexPOS = 0;
 	int maxIndex;
 	public Text showCurrentPOS;
+	public AudioSource paddleWater;
 	public static BoatControl s_instance;
 	void Awake() {
 		if (s_instance == null) {
@@ -63,6 +64,7 @@ public class BoatControl : MonoBehaviour {
 
 		if (!isLerpingAngle && playerHasControl) {
 			if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+				paddleWater.Play ();
 				if(indexPOS == maxIndex) {
 					indexPOS = 0;
 				}
@@ -72,12 +74,14 @@ public class BoatControl : MonoBehaviour {
 				StartLerp();
 			}	
 			if(Input.GetKeyDown(KeyCode.RightArrow)) {
+				paddleWater.Play ();
 				if(indexPOS == 0) {
 					indexPOS = maxIndex;
 				}
 				else {
 					indexPOS--;
 				}
+
 				StartLerp();
 			}
 

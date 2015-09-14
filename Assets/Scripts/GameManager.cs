@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	float currMastery;
 	int totalMastery;
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
+	public AudioSource wrong, correct, beep, waterPaddle;
 
 	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage, winPage;
 
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour {
 				IdlePage.SetActive(false);
 				ReviewPage.SetActive(true);
 				gameState = GameState.Review;
+				beep.Play();
 			}
 			break;
 		case GameState.Review :
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour {
 				ReviewPage.SetActive(false);
 				InstructionsPage.SetActive(true);
 				gameState = GameState.Instructions;
+				beep.Play();
 			}
 			break;
 		case GameState.Instructions :
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour {
 				InstructionsPage.SetActive(false);
 				GameplayPage.SetActive(true);
 				gameState = GameState.Config;
+				beep.Play();
 			}
 			break;
 		case GameState.Config :
@@ -156,6 +160,7 @@ public class GameManager : MonoBehaviour {
 	}
 	void WinRound(){}
 	bool AnswerCorrect(){
+		correct.Play ();
 		wrongAnswerText.enabled = false;
 		correctText.enabled = true;
 		correctText.GetComponent<Fader>().StartFadeOut();
@@ -168,6 +173,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 	void AnswerWrong(){
+		wrong.Play ();
 		AdjustMasteryMeter(false);
 		timer.timesUp = true;
 		timer.pause = true;
