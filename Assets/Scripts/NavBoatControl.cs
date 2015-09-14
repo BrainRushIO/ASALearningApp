@@ -77,7 +77,6 @@ public class NavBoatControl : MonoBehaviour {
 //				Jibe ();
 //			}
 
-			print (lerpStart.eulerAngles + " lerpStart" + lerpEnd.eulerAngles +  " lerpEnd");
 			float percentageLerp = (Time.time - lerpTimer)/lerpDuration;
 			mast.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, percentageLerp);
 			if (percentageLerp > .98) {
