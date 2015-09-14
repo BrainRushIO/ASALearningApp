@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 	public TextAsset pointsOfSailTxt;
 	bool userClickedStart = true;
 	int requiredMastery = 2;
-	float startTime = 3f, exitTime =3f;
+	float startTime, exitTime = 4f;
 	int currIndex = 0;
 	float currMastery;
 	int totalMastery;
@@ -158,7 +158,10 @@ public class GameManager : MonoBehaviour {
 		currentQuestion.text = "Rotate the boat to " + randomListPoints[currIndex].pointOfSailAnswer.Replace("|"," ");
 		timer.Reset(25f);
 	}
-	void WinRound(){}
+	void WinRound(){
+		startTime = Time.time;
+
+	}
 	bool AnswerCorrect(){
 		correct.Play ();
 		wrongAnswerText.enabled = false;
