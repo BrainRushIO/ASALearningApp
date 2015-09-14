@@ -32,7 +32,7 @@ public class NavManager : MonoBehaviour {
 			hasReachedAllTargets= true;
 			winPage.SetActive(true);
 			gamePlayPage.SetActive(false);
-			transform.GetChild(0).gameObject.SetActive(false);
+			NavBoatControl.s_instance.transform.GetChild(0).gameObject.SetActive(false);
 		}
 
 	}
