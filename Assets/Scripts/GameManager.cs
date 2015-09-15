@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour {
 			currMastery+=x.mastery;
 		}
 		masteryMeter.value = (float)(currMastery)/totalMastery;
-		print (totalMastery + "tote mastery " + currMastery + " curr Mastery");
+		masteryMeter.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "Mastery: " + Mathf.FloorToInt(masteryMeter.value*100f).ToString()+"%";
 	}
 
 
