@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ae63ee6b71611e242b46986c4e6e5a7a
-timeCreated: 1442354978
+timeCreated: 1442356104
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -33,9 +33,9 @@ ModelImporter:
     3300006: metal_GEO
     3300008: right_rudder
     3300010: wires
-    4300000: Sail
-    4300002: wires
-    4300004: Boom
+    4300000: wires
+    4300002: Boom
+    4300004: Sail
     4300006: Hull_GEO
     4300008: right_rudder
     4300010: left_rudder
