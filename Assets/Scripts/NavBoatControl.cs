@@ -18,7 +18,7 @@ public class NavBoatControl : MonoBehaviour {
 	public bool canMove = false;
 	public AudioSource correct;
 	public GameObject rudderR, rudderL;
-	float turningRate = 30f;
+	float turningRate = 60f;
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	public GameObject mast;
@@ -106,12 +106,12 @@ public class NavBoatControl : MonoBehaviour {
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				//todo put this in a function that gets called in fixedUpdate, also add in rudder steering
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
-				_targetRotation = Quaternion.Euler(0, -40f,0);
+				_targetRotation = Quaternion.Euler(0, 40f,0);
 			}
 			
 			else if(Input.GetKey(KeyCode.RightArrow)) {
 				body.AddRelativeTorque (Vector3.up*turnStrength);
-				_targetRotation = Quaternion.Euler(0, 40f,0);
+				_targetRotation = Quaternion.Euler(0, -40f,0);
 
 			}
 			//make thrust proportionate to dist WRT to wind
