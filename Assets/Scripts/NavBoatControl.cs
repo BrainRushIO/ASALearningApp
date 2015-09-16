@@ -12,7 +12,7 @@ public class NavBoatControl : MonoBehaviour {
 	float lerpTimer, lerpDuration=1f;
 	Vector3 boatDirection;
 	bool isJibing = false;
-	float turnStrength = 100f, weakTurnStrength = 100f, strongTurnStrength = 100f;
+	float turnStrength = 10f, weakTurnStrength = 10f, strongTurnStrength = 10f;
 	public static NavBoatControl s_instance;
 	bool isNoSailZone;
 	public bool canMove = false;
@@ -106,12 +106,12 @@ public class NavBoatControl : MonoBehaviour {
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				//todo put this in a function that gets called in fixedUpdate, also add in rudder steering
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
-				_targetRotation = Quaternion.Euler(0, -70f,0);
+				_targetRotation = Quaternion.Euler(0, -40f,0);
 			}
 			
 			else if(Input.GetKey(KeyCode.RightArrow)) {
 				body.AddRelativeTorque (Vector3.up*turnStrength);
-				_targetRotation = Quaternion.Euler(0, 70f,0);
+				_targetRotation = Quaternion.Euler(0, 40f,0);
 
 			}
 			//make thrust proportionate to dist WRT to wind
@@ -119,8 +119,8 @@ public class NavBoatControl : MonoBehaviour {
 				_targetRotation = Quaternion.identity;
 	
 			}
-			rudderR.transform.rotation = Quaternion.RotateTowards(rudderR.transform.rotation, _targetRotation, turningRate * Time.deltaTime);
-			rudderL.transform.rotation = Quaternion.RotateTowards(rudderL.transform.rotation, _targetRotation, turningRate * Time.deltaTime);
+			rudderR.transform.localRotation = Quaternion.RotateTowards(rudderR.transform.localRotation, _targetRotation, turningRate * Time.deltaTime);
+			rudderL.transform.localRotation = Quaternion.RotateTowards(rudderL.transform.localRotation, _targetRotation, turningRate * Time.deltaTime);
 
 			if (!isNoSailZone) {
 				body.AddForce (transform.forward * ReturnCurrentThrust());
