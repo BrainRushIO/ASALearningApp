@@ -24,8 +24,6 @@ public class HoverFollowCam : MonoBehaviour
 	{
 		transform.LookAt(new Vector3(player.position.x, player.position.y+verticalLookOffset, player.position.z));
 
-//		transform.position = Vector3.Slerp(
-
 	}
 
 	void FixedUpdate() {

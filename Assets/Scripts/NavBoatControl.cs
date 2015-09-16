@@ -17,7 +17,8 @@ public class NavBoatControl : MonoBehaviour {
 	bool isNoSailZone;
 	public bool canMove = false;
 	public AudioSource correct;
-
+	public GameObject rudderR, rudderL;
+	float turningRate = 30f;
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	public GameObject mast;
@@ -102,20 +103,31 @@ public class NavBoatControl : MonoBehaviour {
 
 	void FixedUpdate () {
 		if (canMove) {
-		if(Input.GetKey(KeyCode.LeftArrow)) {
-			//todo put this in a function that gets called in fixedUpdate, also add in rudder steering
-			body.AddRelativeTorque (-Vector3.up*turnStrength);
+			if(Input.GetKey(KeyCode.LeftArrow)) {
+				//todo put this in a function that gets called in fixedUpdate, also add in rudder steering
+				body.AddRelativeTorque (-Vector3.up*turnStrength);
+				_targetRotation = Quaternion.Euler(0, -70f,0);
+			}
 			
-		}
+			else if(Input.GetKey(KeyCode.RightArrow)) {
+				body.AddRelativeTorque (Vector3.up*turnStrength);
+				_targetRotation = Quaternion.Euler(0, 70f,0);
+
+			}
+			//make thrust proportionate to dist WRT to wind
+			else {
+				_targetRotation = Quaternion.identity;
+	
+			}
+			rudderR.transform.rotation = Quaternion.RotateTowards(rudderR.transform.rotation, _targetRotation, turningRate * Time.deltaTime);
+			rudderL.transform.rotation = Quaternion.RotateTowards(rudderL.transform.rotation, _targetRotation, turningRate * Time.deltaTime);
+
+			if (!isNoSailZone) {
+				body.AddForce (transform.forward * ReturnCurrentThrust());
+			}
+
+
 		
-		if(Input.GetKey(KeyCode.RightArrow)) {
-			body.AddRelativeTorque (Vector3.up*turnStrength);
-			
-		}
-		//make thrust proportionate to dist WRT to wind
-		if (!isNoSailZone) {
-			body.AddForce (transform.forward * ReturnCurrentThrust());
-		}
 		}
 	}
 
@@ -137,4 +149,13 @@ public class NavBoatControl : MonoBehaviour {
 	float ReturnCurrentThrust() {
 		return currThrust;
 	}
+
+	// Maximum turn rate in degrees per second.
+	// Rotation we should blend towards.
+	private Quaternion _targetRotation = Quaternion.identity;
+	// Call this when you want to turn the object smoothly.
+
+	
+
+	
 }
