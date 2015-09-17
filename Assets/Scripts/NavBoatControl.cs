@@ -4,29 +4,30 @@ using System.Collections;
 public class NavBoatControl : MonoBehaviour {
 
 	Rigidbody body;
-	public float currThrust = 500;
 	public enum BoatSideFacingWind {Port, Starboard};
+	public static NavBoatControl s_instance;
+
+	public float currThrust = 500;
 	float angleToAdjustTo;
 	float angleWRTWind, lastAngleWRTWind;
-	Quaternion lerpStart, lerpEnd;
 	float lerpTimer, lerpDuration=1f;
-	Quaternion comeAboutStart, comeAboutEnd;
-	bool isComingAbout = false;
-	float comingAboutTimer, comingAboutDuration = .5f;
-
-	Vector3 boatDirection;
-	bool isJibing = false;
 	float turnStrength = 10f, weakTurnStrength = 10f, strongTurnStrength = 10f;
-	public static NavBoatControl s_instance;
-	bool isNoSailZone;
-	public bool canMove = false;
-	public AudioSource correct;
-	public GameObject rudderR, rudderL;
-	float turningRate = 60f;
-	public SkinnedMeshRenderer blendShape;
 	float blendFloatValue;
+	float turningRate = 60f;
+
+	Quaternion lerpStart, lerpEnd;
+	Quaternion comeAboutStart, comeAboutEnd;
+	Quaternion _targetRotation = Quaternion.identity;
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
+	Vector3 boatDirection;
+	bool isJibing = false;
+	bool isNoSailZone;
+	public bool canMove = false;
+	public SkinnedMeshRenderer blendShape;
+	public AudioSource correct;
+
+	public GameObject rudderR, rudderL;
 	public GameObject mast;
 	public GameObject redNavObj, greenNavObj;
 	public Transform red1,red2,green1,green2;
@@ -44,17 +45,12 @@ public class NavBoatControl : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
 	void Update () {
+
 		lastAngleWRTWind = angleWRTWind;
 		directionWindComingFrom = WindManager.s_instance.directionOfWind;
-		
 
-		//figure out angular relation ship between boat and wind
-		//isNegative lets us know port vs starboard
-//		float isNegative = Mathf.Atan2(localTarget.x, localTarget.z)/Mathf.Abs(Mathf.Atan2(localTarget.x, localTarget.z));
 		boatDirection = transform.forward;
-
 		angleWRTWind = Vector3.Angle(boatDirection,directionWindComingFrom);
 
 		blendFloatValue = 100;
@@ -81,7 +77,7 @@ public class NavBoatControl : MonoBehaviour {
 				Jibe (1f);
 			}
 		}
-
+		//TODO replace euler angle conditions with WRT to wind conditions in the case of variable wind
 		if (transform.rotation.eulerAngles.y  > 355f) {
 			blendFloatValue = 50 - (360f-transform.rotation.eulerAngles.y ) * 10f;
 			blendShape.SetBlendShapeWeight(0,blendFloatValue);
@@ -92,43 +88,16 @@ public class NavBoatControl : MonoBehaviour {
 
 		}
 
-//		if (angleWRTWind > 355f && lastAngleWRTWind < 5f) {
-//			if (lastAngleWRTWind!=0){
-//				ComeAbout (-1f);
-//			}
-//		}
-//		if (angleWRTWind < 355f && lastAngleWRTWind > 5f
-//		   ) {
-//			if (lastAngleWRTWind!=0){
-//				ComeAbout (1f);
-//			}
-//		}
-//
-//		if (isComingAbout) {
-//			float percentageComeLerp = (Time.time - comingAboutTimer)/lerpDuration;
-//			mast.transform.rotation = Quaternion.Lerp(comeAboutStart, comeAboutEnd, percentageComeLerp);
-//			if (percentageComeLerp > .98) {
-//				mast.transform.rotation = Quaternion.Lerp(comeAboutStart, comeAboutEnd, 1);
-//				isComingAbout = false;
-//				
-//			}
-//
-//		}
-
 		if (!isJibing) {
 			mast.transform.rotation = Quaternion.Lerp(Quaternion.identity, transform.rotation, 0.5f);
 		}
-		else if (isJibing) {
-//			if ((angleWRTWind > 0 && lastAngleWRTWind < 0 && Mathf.Abs(lastAngleWRTWind) >150f) || (angleWRTWind < 0 && lastAngleWRTWind > 0) && Mathf.Abs(lastAngleWRTWind) >150f) {
-//				Jibe ();
-//			}
 
+		else if (isJibing) {
 			float percentageLerp = (Time.time - lerpTimer)/lerpDuration;
 			mast.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, percentageLerp);
 			if (percentageLerp > .98) {
 				mast.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, 1);
 				isJibing = false;
-
 			}
 
 		}
@@ -167,20 +136,9 @@ public class NavBoatControl : MonoBehaviour {
 			rudderL.transform.localRotation = Quaternion.RotateTowards(rudderL.transform.localRotation, _targetRotation, turningRate * Time.deltaTime);
 
 			if (!isNoSailZone) {
-				body.AddForce (transform.forward * ReturnCurrentThrust());
+				body.AddForce (transform.forward * currThrust);
 			}
-
-
-		
 		}
-	}
-
-	void ComeAbout(float negative) {
-		isComingAbout = true;
-		comingAboutTimer = Time.time;
-		comeAboutStart = mast.transform.rotation;
-		comeAboutEnd = mast.transform.rotation * Quaternion.Euler(0,negative*180f,0);
-		
 	}
 
 	void Jibe(float negative) {
@@ -198,16 +156,5 @@ public class NavBoatControl : MonoBehaviour {
 		}
 	}
 
-	float ReturnCurrentThrust() {
-		return currThrust;
-	}
 
-	// Maximum turn rate in degrees per second.
-	// Rotation we should blend towards.
-	private Quaternion _targetRotation = Quaternion.identity;
-	// Call this when you want to turn the object smoothly.
-
-	
-
-	
 }
