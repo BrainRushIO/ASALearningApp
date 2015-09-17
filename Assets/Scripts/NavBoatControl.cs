@@ -117,7 +117,6 @@ public class NavBoatControl : MonoBehaviour {
 	void FixedUpdate () {
 		if (canMove) {
 			if(Input.GetKey(KeyCode.LeftArrow)) {
-				//todo put this in a function that gets called in fixedUpdate, also add in rudder steering
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
 				_targetRotation = Quaternion.Euler(0, 40f,0);
 			}
@@ -127,11 +126,11 @@ public class NavBoatControl : MonoBehaviour {
 				_targetRotation = Quaternion.Euler(0, -40f,0);
 
 			}
-			//make thrust proportionate to dist WRT to wind
 			else {
 				_targetRotation = Quaternion.identity;
 	
 			}
+
 			rudderR.transform.localRotation = Quaternion.RotateTowards(rudderR.transform.localRotation, _targetRotation, turningRate * Time.deltaTime);
 			rudderL.transform.localRotation = Quaternion.RotateTowards(rudderL.transform.localRotation, _targetRotation, turningRate * Time.deltaTime);
 

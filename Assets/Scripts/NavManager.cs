@@ -14,6 +14,8 @@ public class NavManager : MonoBehaviour {
 	public AudioSource beep;
 	float startTime, elapsedTime;
 	public Text timeText;
+	int rating;
+	GameObject[] ratingObjects;
 
 	void Awake() {
 		if (s_instance == null) {
@@ -90,6 +92,16 @@ public class NavManager : MonoBehaviour {
 			                                   
 			break;
 		case GameState.Win :
+			if (elapsedTime > 200f) {
+				rating = 0;
+			}
+			else if (elapsedTime < 100f) {
+				rating = 2;
+			}
+			else {
+				rating = 1;
+			}
+
 			break;
 		}
 
