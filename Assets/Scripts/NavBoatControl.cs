@@ -10,6 +10,10 @@ public class NavBoatControl : MonoBehaviour {
 	float angleWRTWind, lastAngleWRTWind;
 	Quaternion lerpStart, lerpEnd;
 	float lerpTimer, lerpDuration=1f;
+	Quaternion comeAboutStart, comeAboutEnd;
+	bool isComingAbout = false;
+	float comingAboutTimer, comingAboutDuration = .5f;
+
 	Vector3 boatDirection;
 	bool isJibing = false;
 	float turnStrength = 10f, weakTurnStrength = 10f, strongTurnStrength = 10f;
@@ -19,6 +23,8 @@ public class NavBoatControl : MonoBehaviour {
 	public AudioSource correct;
 	public GameObject rudderR, rudderL;
 	float turningRate = 60f;
+	public SkinnedMeshRenderer blendShape;
+	float blendFloatValue;
 
 	Vector3 directionWindComingFrom = new Vector3(0f,0f,1f);
 	public GameObject mast;
@@ -50,9 +56,14 @@ public class NavBoatControl : MonoBehaviour {
 		boatDirection = transform.forward;
 
 		angleWRTWind = Vector3.Angle(boatDirection,directionWindComingFrom);
+
+		blendFloatValue = 100;
 		if (transform.rotation.eulerAngles.y > 180f ) {
 			angleWRTWind = 360-angleWRTWind;
+			blendFloatValue = 0;
 		}
+
+		blendShape.SetBlendShapeWeight(0,blendFloatValue);
 
 
 		if (float.IsNaN(angleWRTWind)) {
@@ -70,6 +81,39 @@ public class NavBoatControl : MonoBehaviour {
 				Jibe (1f);
 			}
 		}
+
+		if (transform.rotation.eulerAngles.y  > 355f) {
+			blendFloatValue = 50 - (360f-transform.rotation.eulerAngles.y ) * 10f;
+			blendShape.SetBlendShapeWeight(0,blendFloatValue);
+		}
+		else if (transform.rotation.eulerAngles.y  < 5f) {
+			blendFloatValue = (transform.rotation.eulerAngles.y) * 10f + 50f;
+			blendShape.SetBlendShapeWeight(0,blendFloatValue);
+
+		}
+
+//		if (angleWRTWind > 355f && lastAngleWRTWind < 5f) {
+//			if (lastAngleWRTWind!=0){
+//				ComeAbout (-1f);
+//			}
+//		}
+//		if (angleWRTWind < 355f && lastAngleWRTWind > 5f
+//		   ) {
+//			if (lastAngleWRTWind!=0){
+//				ComeAbout (1f);
+//			}
+//		}
+//
+//		if (isComingAbout) {
+//			float percentageComeLerp = (Time.time - comingAboutTimer)/lerpDuration;
+//			mast.transform.rotation = Quaternion.Lerp(comeAboutStart, comeAboutEnd, percentageComeLerp);
+//			if (percentageComeLerp > .98) {
+//				mast.transform.rotation = Quaternion.Lerp(comeAboutStart, comeAboutEnd, 1);
+//				isComingAbout = false;
+//				
+//			}
+//
+//		}
 
 		if (!isJibing) {
 			mast.transform.rotation = Quaternion.Lerp(Quaternion.identity, transform.rotation, 0.5f);
@@ -129,6 +173,14 @@ public class NavBoatControl : MonoBehaviour {
 
 		
 		}
+	}
+
+	void ComeAbout(float negative) {
+		isComingAbout = true;
+		comingAboutTimer = Time.time;
+		comeAboutStart = mast.transform.rotation;
+		comeAboutEnd = mast.transform.rotation * Quaternion.Euler(0,negative*180f,0);
+		
 	}
 
 	void Jibe(float negative) {
