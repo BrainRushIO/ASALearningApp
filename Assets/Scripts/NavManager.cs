@@ -84,6 +84,16 @@ public class NavManager : MonoBehaviour {
 			if (hasReachedAllTargets) {
 				gameState = GameState.Win;
 				NavBoatControl.s_instance.canMove = false;
+				if (elapsedTime > 200f) {
+					rating = 0;
+				}
+				else if (elapsedTime < 100f) {
+					rating = 2;
+				}
+				else {
+					rating = 1;
+				}
+//				ratingObjects[rating].SetActive(true);
 				break;
 			}
 			elapsedTime = Time.time - startTime;
@@ -92,15 +102,7 @@ public class NavManager : MonoBehaviour {
 			                                   
 			break;
 		case GameState.Win :
-			if (elapsedTime > 200f) {
-				rating = 0;
-			}
-			else if (elapsedTime < 100f) {
-				rating = 2;
-			}
-			else {
-				rating = 1;
-			}
+
 
 			break;
 		}

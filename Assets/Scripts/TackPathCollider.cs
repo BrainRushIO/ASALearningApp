@@ -44,13 +44,12 @@ public class TackPathCollider : MonoBehaviour {
 		}
 
 		if (isRed) {
-			thisLineRenderer.SetPosition(0, transform.position);
-			thisLineRenderer.SetPosition(1, currentIntersectionPointRed);
+			thisLineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y-.37f,transform.position.z));
+			thisLineRenderer.SetPosition(1, new Vector3(currentIntersectionPointRed.x,currentIntersectionPointRed.y-.37f,currentIntersectionPointRed.z));
 		}
 		else {
-			thisLineRenderer.SetPosition(0, transform.position);
-			thisLineRenderer.SetPosition(1, currentIntersectionPointGreen);
-
+			thisLineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y-.37f,transform.position.z));
+			thisLineRenderer.SetPosition(1, new Vector3(currentIntersectionPointGreen.x,currentIntersectionPointGreen.y-.37f,currentIntersectionPointGreen.z));
 		}
 	}
 
