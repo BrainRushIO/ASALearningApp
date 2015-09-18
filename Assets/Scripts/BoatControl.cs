@@ -11,10 +11,10 @@ public class pointOfSail{
 		sailTitle = sailTitleToSet;
 	}
 };
-public class BoatControl : MonoBehaviour {
+public class BoatControl : BoatBase {
 	public TextAsset pointsOfSailTxt;
 	bool isLerpingAngle = false;
-	float lerpTime = .3f, lerpTimer, currAngle, endAngle;
+	float POTlerpTime = .3f, POTlerpTimer, currAngle, endAngle;
 	public int indexPOS = 0;
 	int maxIndex;
 	public Text showCurrentPOS;
@@ -46,13 +46,14 @@ public class BoatControl : MonoBehaviour {
 	void StartLerp () {
 		//check if changing direction
 		isLerpingAngle = true;
-		lerpTimer = Time.time;
+		POTlerpTimer = Time.time;
 	}
 	// Update is called once per frame
 	void Update () {
+
 		//HANDLES ROTATING THE BOAT AROUND THE POINTS OF SAIL___________________________________________________________________________________________
 		if (isLerpingAngle) {
-			float fracJourney = (Time.time - lerpTimer)/lerpTime;
+			float fracJourney = (Time.time - POTlerpTimer)/POTlerpTime;
 			transform.rotation = Quaternion.Lerp (Quaternion.Euler(0, currAngle,0),Quaternion.Euler(0, allPoints[indexPOS].angle,0), fracJourney);
 			if (fracJourney > .99f) {
 				fracJourney = 1f;
