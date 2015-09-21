@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour {
 				GameplayPage.SetActive(true);
 				gameState = GameState.Config;
 				beep.Play();
+				Camera.main.GetComponent<QuaternionLerp>().StartLerp(5f);
 			}
 			break;
 		case GameState.Config :

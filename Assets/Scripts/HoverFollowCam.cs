@@ -10,7 +10,7 @@ public class HoverFollowCam : MonoBehaviour
 	public enum CameraMode {stationary, follow, lerpToDestination};
 	public CameraMode thisCameraMode = CameraMode.stationary;
 	public Vector3 panAwayPosition, startPosition;
-	float lerpTimer, lerpDuration = 5f;
+	float lerpTimer, lerpDuration = 15f;
 	//switches
 	bool isAdjustingToCamPos;
 	bool isPanningOut;
@@ -29,7 +29,8 @@ public class HoverFollowCam : MonoBehaviour
 		if (isPanningOut) {
 			float fraction;
 			fraction = (Time.time - lerpTimer) / lerpDuration;
-			camPos.position = Vector3.Lerp(startPosition, panAwayPosition, fraction);
+			print ("LERPING " + fraction);
+			Camera.main.transform.position = Vector3.Lerp(startPosition, panAwayPosition, fraction);
 			if (fraction >= .99f) {
 				isPanningOut = false;
 			}
@@ -53,8 +54,9 @@ public class HoverFollowCam : MonoBehaviour
 	public void PanOut() {
 		lerpTimer = Time.time;
 		isPanningOut = true;
-		startPosition = camPos.position;
-		panAwayPosition = new Vector3(camPos.position.x + 100f, camPos.position.y + 100f, camPos.position.z + 100f);
+		startPosition = transform.position;
+		panAwayPosition = new Vector3(transform.position.x + 100f, transform.position.y + 100f, transform.position.z + 100f);
+		thisCameraMode = CameraMode.lerpToDestination;
 	}
 
 	//We have two orders of business, firstly we must have the camera always be moving to camPos, this will be triggered when it is a certain distance away from camPos

@@ -82,6 +82,7 @@ public class NavManager : MonoBehaviour {
 			break;
 		case GameState.Gameplay :
 			if (hasReachedAllTargets) {
+				Camera.main.GetComponent<HoverFollowCam>().PanOut();
 				gameState = GameState.Win;
 				NavBoatControl.s_instance.canMove = false;
 				if (elapsedTime > 200f) {
@@ -102,7 +103,6 @@ public class NavManager : MonoBehaviour {
 			                                   
 			break;
 		case GameState.Win :
-
 
 			break;
 		}
