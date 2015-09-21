@@ -12,6 +12,7 @@ public class NavManager : MonoBehaviour {
 	int currNavPoint = 0;
 	public Text currTarget;
 	public AudioSource beep;
+	public AudioSource[] tracksMusic;
 	float startTime, elapsedTime;
 	public Text timeText;
 	int rating;
@@ -58,7 +59,8 @@ public class NavManager : MonoBehaviour {
 				reviewPage.SetActive(true);
 				gameState = GameState.Review;
 				beep.Play();
-
+				int rand = Random.Range(0,tracksMusic.Length);
+				tracksMusic[rand].Play();
 			}
 			break;
 		case GameState.Review :
@@ -98,7 +100,7 @@ public class NavManager : MonoBehaviour {
 				break;
 			}
 			elapsedTime = Time.time - startTime;
-			currTarget.text = "Your current destination is: " + navigationPoints[currNavPoint].name;
+			currTarget.text = "Destination: " + navigationPoints[currNavPoint].name;
 			timeText.text = "Elapsed time: " + elapsedTime.ToString("F2") + "s";
 			                                   
 			break;
