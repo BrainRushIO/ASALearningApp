@@ -26,15 +26,7 @@ public class HoverFollowCam : MonoBehaviour
 	{
 		transform.LookAt(new Vector3(player.position.x, player.position.y+verticalLookOffset, player.position.z));
 
-		if (isPanningOut) {
-			float fraction;
-			fraction = (Time.time - lerpTimer) / lerpDuration;
-			print ("LERPING " + fraction);
-			Camera.main.transform.position = Vector3.Lerp(startPosition, panAwayPosition, fraction);
-			if (fraction >= .99f) {
-				isPanningOut = false;
-			}
-		}
+
 	}
 
 	void FixedUpdate() {
@@ -45,7 +37,15 @@ public class HoverFollowCam : MonoBehaviour
 		case CameraMode.stationary :
 			break;
 		case CameraMode.lerpToDestination :
-
+			if (isPanningOut) {
+				float fraction;
+				fraction = (Time.time - lerpTimer) / lerpDuration;
+				print ("LERPING " + fraction);
+				transform.position = Vector3.Lerp(startPosition, panAwayPosition, fraction);
+				if (fraction >= .99f) {
+					isPanningOut = false;
+				}
+			}
 			break;
 		}
 //		transform.position = Vector3.SmoothDamp(transform.position, camPos.position, ref refVelocity, smoothTime);
@@ -55,7 +55,7 @@ public class HoverFollowCam : MonoBehaviour
 		lerpTimer = Time.time;
 		isPanningOut = true;
 		startPosition = transform.position;
-		panAwayPosition = new Vector3(transform.position.x + 100f, transform.position.y + 100f, transform.position.z + 100f);
+		panAwayPosition = new Vector3(transform.position.x + 500f, transform.position.y + 100f, transform.position.z + 100f);
 		thisCameraMode = CameraMode.lerpToDestination;
 	}
 

@@ -9,7 +9,7 @@ public class NavBoatControl : BoatBase {
 
 	public float currThrust = 500;
 	float angleToAdjustTo;
-	float turnStrength = 10f, weakTurnStrength = 10f, strongTurnStrength = 10f;
+	float turnStrength = 5f, weakTurnStrength = 5f, strongTurnStrength = 5f;
 	float turningRate = 60f;
 
 	Quaternion comeAboutStart, comeAboutEnd;
