@@ -5,29 +5,31 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+	//Manages the Points of Sail Module
 	public enum GameState {Idle, Review, Instructions, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen};
 	public GameState gameState;
 	public List<Term> listOfPOSTerms,tempListPointTerms,randomListPoints;
 	List<pointOfSail> allPoints;
-	public TextAsset pointsOfSailTxt;
 	bool userClickedStart = true;
 	int requiredMastery = 2;
-	float startTime, exitTime = 4f;
 	int currIndex = 0;
-	float currMastery;
 	int totalMastery;
+	float startTime, exitTime = 4f;
+	float currMastery;
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
 	public AudioSource wrong, correct, beep, waterPaddle;
 
 	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage, winPage;
 
-	public Timer1 timer;
-	public Text currentQuestion;
+	public TextAsset pointsOfSailTxt;
 	public Slider masteryMeter;
+	public Text currentQuestion;
 	public Text wrongAnswerText;
 	public Text correctText;
+	public Timer1 timer;
 
 	public static GameManager s_instance;
+
 	void Awake() {
 		if (s_instance == null) {
 			s_instance = this;
@@ -36,14 +38,9 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
+
 	void Update () 
 	{
-		print (gameState);
 		switch (gameState) {
 		case GameState.Idle :
 			if (Input.GetKeyDown(KeyCode.Space)){
