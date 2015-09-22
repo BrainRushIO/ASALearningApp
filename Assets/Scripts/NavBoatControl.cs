@@ -11,6 +11,8 @@ public class NavBoatControl : BoatBase {
 	float angleToAdjustTo;
 	float turnStrength = 5f, weakTurnStrength = 5f, strongTurnStrength = 5f;
 	float turningRate = 60f;
+	float rudderRotation =40f;
+	float deadZone = 30f;
 
 	Quaternion comeAboutStart, comeAboutEnd;
 	Quaternion targetRudderRotation = Quaternion.identity;
@@ -40,7 +42,7 @@ public class NavBoatControl : BoatBase {
 
 		MastRotation();
 
-		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < 30f) {
+		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < deadZone) {
 			isNoSailZone = true;
 			turnStrength = weakTurnStrength;
 		}
@@ -55,12 +57,12 @@ public class NavBoatControl : BoatBase {
 		if (canMove) {
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
-				targetRudderRotation = Quaternion.Euler(0, 40f,0);
+				targetRudderRotation = Quaternion.Euler(0, rudderRotation,0);
 			}
 			
 			else if(Input.GetKey(KeyCode.RightArrow)) {
 				body.AddRelativeTorque (Vector3.up*turnStrength);
-				targetRudderRotation = Quaternion.Euler(0, -40f,0);
+				targetRudderRotation = Quaternion.Euler(0, -rudderRotation,0);
 
 			}
 			else {
