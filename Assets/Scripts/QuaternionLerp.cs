@@ -3,11 +3,14 @@ using System.Collections;
 
 public class QuaternionLerp : MonoBehaviour {
 
+
+	//This script is designed for a one time playing camera move, use two transforms two set two positions and quaternions for a camera move transition
+	//which is triggered by StartLerp
+
 	public Quaternion lerpStart, lerpEnd;
 	public Vector3 lerpPosStart, lerpPosEnd;
 	bool isLerping;
 	float lerpTimer, lerpDuration;
-	// Use this for initialization
 	void Start () {
 		lerpStart = transform.GetChild(0).rotation;
 		lerpEnd = transform.GetChild(1).rotation;

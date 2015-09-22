@@ -40,7 +40,6 @@ public class HoverFollowCam : MonoBehaviour
 			if (isPanningOut) {
 				float fraction;
 				fraction = (Time.time - lerpTimer) / lerpDuration;
-				print ("LERPING " + fraction);
 				transform.position = Vector3.Lerp(startPosition, panAwayPosition, fraction);
 				if (fraction >= .99f) {
 					isPanningOut = false;

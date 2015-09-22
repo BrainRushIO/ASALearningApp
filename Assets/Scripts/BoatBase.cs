@@ -21,8 +21,6 @@ public class BoatBase : MonoBehaviour {
 		
 		boatDirection = transform.forward;
 		angleWRTWind = Vector3.Angle(boatDirection,directionWindComingFrom);
-		print(angleWRTWind + " angle wrt to wind");
-		
 		blendFloatValue = 100;
 		if (transform.rotation.eulerAngles.y > 180f ) {
 			angleWRTWind = 360-angleWRTWind;
