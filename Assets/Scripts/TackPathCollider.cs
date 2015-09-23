@@ -3,7 +3,9 @@ using System.Collections;
 
 public class TackPathCollider : MonoBehaviour {
 
-	public GameObject redPathCube, greenPathCube;
+
+	//this script generates the red and green lines used to show tack pathes in the navigation sailing module
+
 	public bool isRed;
 	public bool isPlayer;
 	Vector3 currentIntersectionPointRed, currentIntersectionPointGreen;
