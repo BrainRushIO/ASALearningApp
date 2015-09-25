@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
 	public Text wrongAnswerText;
 	public Text correctText;
 	public Timer1 timer;
+	public string currAnimState;
 
 	public static GameManager s_instance;
 
@@ -145,7 +146,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	bool Checker() {
-		if (randomListPoints[currIndex].pointOfSailAnswer == BoatControl.s_instance.ReturnCurrPointOfSail()) {
+		if (randomListPoints[currIndex].pointOfSailAnswer.Replace("|"," ") == currAnimState) {
 			return true;
 		}
 		else {
@@ -184,7 +185,7 @@ public class GameManager : MonoBehaviour {
 	void DisplayFeedbackText () {
 		//Nope, you selected this position, try again
 		wrongAnswerText.enabled = true;
-		BoatControl.s_instance.showCurrentPOS.text = "Incorrect, you selected: " + BoatControl.s_instance.allPoints[BoatControl.s_instance.indexPOS].sailTitle.Replace("|"," ");
+		wrongAnswerText.text = "Incorrect, you selected: " + currAnimState;
 
 	}
 	void GotoNextModule(){
