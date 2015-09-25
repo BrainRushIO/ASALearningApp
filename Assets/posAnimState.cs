@@ -35,18 +35,26 @@ public class posAnimState : MonoBehaviour {
 					break;
 
 				case "PTBeamReach":
+					boatAnim.SetTrigger ("PTBeamReach");
 					break;
+
 				case "PTBroadReach":
+					boatAnim.SetTrigger("PTBroadReach");
 					break;
 				case "Run":
+					boatAnim.SetTrigger("Run");
 					break;
 				case "STBroadReach":
+					boatAnim.SetTrigger("STBroadReach");
 					break;
 				case "STBeamReach":
+					boatAnim.SetTrigger("STBeamReach");
 					break;
 				case "STCloseReach":
+					boatAnim.SetTrigger("STCloseReach");
 					break;
 				case "STCloseHaul":
+					boatAnim.SetTrigger("STCloseHaul");
 					break;
 
 
