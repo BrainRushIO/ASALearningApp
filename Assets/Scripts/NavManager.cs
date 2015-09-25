@@ -17,6 +17,7 @@ public class NavManager : MonoBehaviour {
 	public Text timeText;
 	int rating;
 	GameObject[] ratingObjects;
+	public GameObject directionalArrow;
 
 	void Awake() {
 		if (s_instance == null) {
@@ -99,13 +100,14 @@ public class NavManager : MonoBehaviour {
 //				ratingObjects[rating].SetActive(true);
 				break;
 			}
+			directionalArrow.transform.LookAt(navigationPoints[currNavPoint].transform);
 			elapsedTime = Time.time - startTime;
 			currTarget.text = "Destination: " + navigationPoints[currNavPoint].name;
 			timeText.text = "Elapsed time: " + elapsedTime.ToString("F2") + "s";
 			                                   
 			break;
 		case GameState.Win :
-
+			directionalArrow.SetActive(false);
 			break;
 		}
 

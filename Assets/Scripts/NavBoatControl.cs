@@ -40,7 +40,7 @@ public class NavBoatControl : BoatBase {
 	}
 
 	void Update () {
-
+		print (angleWRTWind);
 		MastRotation();
 
 		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < deadZone) {
