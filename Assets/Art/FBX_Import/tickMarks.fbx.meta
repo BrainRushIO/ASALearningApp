@@ -1,15 +1,27 @@
 fileFormatVersion: 2
-guid: 302462d84c7efcc4f8b0d18c03f50ac2
-timeCreated: 1443051361
+guid: cc9bd65bf876a0b408ee73e2f36b96f2
+timeCreated: 1443135984
 licenseType: Pro
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: group19
+    100000: bigTicks
+    100002: medTicks
+    100004: smallTicks
+    100006: //RootNode
+    400000: bigTicks
+    400002: medTicks
+    400004: smallTicks
+    400006: //RootNode
+    2300000: bigTicks
+    2300002: medTicks
+    2300004: smallTicks
+    3300000: bigTicks
+    3300002: medTicks
+    3300004: smallTicks
+    4300000: bigTicks
+    4300002: smallTicks
+    4300004: medTicks
     9500000: //RootNode
   materials:
     importMaterials: 0
@@ -33,7 +45,7 @@ ModelImporter:
     globalScale: 100
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
