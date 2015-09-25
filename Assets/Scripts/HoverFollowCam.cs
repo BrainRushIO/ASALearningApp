@@ -55,7 +55,7 @@ public class HoverFollowCam : MonoBehaviour
 		lerpTimer = Time.time;
 		isPanningOut = true;
 		startPosition = transform.position;
-		panAwayPosition = new Vector3(transform.position.x + 500f, transform.position.y + 100f, transform.position.z + 100f);
+		panAwayPosition = new Vector3(transform.position.x + 100f, transform.position.y + 100f, transform.position.z + 100f);
 		thisCameraMode = CameraMode.lerpToDestination;
 	}
 }

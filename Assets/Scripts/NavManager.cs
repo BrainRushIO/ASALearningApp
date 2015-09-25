@@ -3,8 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 public class NavManager : MonoBehaviour {
 
-	enum GameState {Idle, Review, Instructions, Gameplay, Win};
-	GameState gameState = GameState.Idle;
+	public enum GameState {Idle, Review, Instructions, Gameplay, Win};
+	public GameState gameState = GameState.Idle;
 	public GameObject[] navigationPoints;
 	public GameObject reviewPage, idlePage, instructionsPage, gamePlayPage, winPage;
 	public static NavManager s_instance;

@@ -21,6 +21,7 @@ public class NavBoatControl : BoatBase {
 	public bool canMove = false;
 	public AudioSource correct;
 
+	public GameObject arrow;
 	public GameObject rudderR, rudderL;
 	public GameObject redNavObj, greenNavObj;
 	public Transform red1,red2,green1,green2;
@@ -50,7 +51,9 @@ public class NavBoatControl : BoatBase {
 			isNoSailZone = false;
 			turnStrength = strongTurnStrength;
 		}
-
+		if (NavManager.s_instance.gameState == NavManager.GameState.Win) {
+			arrow.SetActive(false);
+		}
 	}
 
 	void FixedUpdate () {
