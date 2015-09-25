@@ -12,7 +12,7 @@ public class NavBoatControl : BoatBase {
 	float turnStrength = 5f, weakTurnStrength = 5f, strongTurnStrength = 5f;
 	float turningRate = 60f;
 	float rudderRotation =40f;
-	float deadZone = 30f;
+	float deadZone = 20f;
 
 	Quaternion comeAboutStart, comeAboutEnd;
 	Quaternion targetRudderRotation = Quaternion.identity;
@@ -20,7 +20,7 @@ public class NavBoatControl : BoatBase {
 	bool isNoSailZone;
 	public bool canMove = false;
 	public AudioSource correct;
-
+	public Animator boatKeel;
 	public GameObject arrow;
 	public GameObject rudderR, rudderL;
 	public GameObject redNavObj, greenNavObj;
@@ -40,8 +40,17 @@ public class NavBoatControl : BoatBase {
 	}
 
 	void Update () {
-		print (angleWRTWind);
 		MastRotation();
+
+		//add keeling into the boat rotation
+		float animatorBlendVal;
+		if (angleWRTWind < 360f && angleWRTWind > 180f) {
+			animatorBlendVal = (angleWRTWind-180f)/360f;
+		}
+		else {
+			animatorBlendVal = (angleWRTWind/360f + .5f);
+		}
+		boatKeel.SetFloat("rotation", animatorBlendVal);
 
 		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < deadZone) {
 			isNoSailZone = true;
