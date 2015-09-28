@@ -46,7 +46,11 @@ public class BoatBase : MonoBehaviour {
 		}
 
 		if (!isJibing) {
-			mast.transform.rotation = Quaternion.Lerp(Quaternion.identity, transform.rotation, 0.5f);
+
+//			get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
+
+			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
+		
 		}
 		
 		else if (isJibing) {
@@ -77,8 +81,8 @@ public class BoatBase : MonoBehaviour {
 		print ("JIBE");
 		isJibing = true;
 		lerpTimer = Time.time;
-		lerpStart = mast.transform.rotation;
-		lerpEnd = mast.transform.rotation * Quaternion.Euler(0,negative*180f,0);
+		lerpStart = Quaternion.Inverse(mast.transform.localRotation);
+		lerpEnd = Quaternion.Inverse(mast.transform.localRotation * Quaternion.Inverse(Quaternion.Euler(0,negative*180f,0)));
 		
 	}
 }
