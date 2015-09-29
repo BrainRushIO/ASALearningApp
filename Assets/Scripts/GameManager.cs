@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	//Manages the Points of Sail Module
-	public enum GameState {Idle, Review, Instructions, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen};
+	public enum GameState {Idle, Review, Instructions, TestPage, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen};
 	public GameState gameState;
 	public List<Term> listOfPOSTerms,tempListPointTerms,randomListPoints;
 	List<pointOfSail> allPoints;
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
 	public AudioSource wrong, correct, beep, waterPaddle;
 
-	public GameObject IdlePage, ReviewPage, InstructionsPage, GameplayPage, winPage;
+	public GameObject IdlePage, ReviewPage,TestPage, InstructionsPage, GameplayPage, winPage;
 
 	public TextAsset pointsOfSailTxt;
 	public Slider masteryMeter;
@@ -54,6 +54,14 @@ public class GameManager : MonoBehaviour {
 		case GameState.Review :
 			if (Input.GetKeyDown(KeyCode.Space)){
 				ReviewPage.SetActive(false);
+				TestPage.SetActive(true);
+				gameState = GameState.TestPage;
+				beep.Play();
+			}
+			break;
+		case GameState.TestPage :
+			if (Input.GetKeyDown(KeyCode.Space)){
+				TestPage.SetActive(false);
 				InstructionsPage.SetActive(true);
 				gameState = GameState.Instructions;
 				beep.Play();

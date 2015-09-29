@@ -16,8 +16,7 @@ public class QuaternionLerp : MonoBehaviour {
 		lerpEnd = transform.GetChild(1).rotation;
 		lerpPosStart = transform.GetChild(0).position;
 		lerpPosEnd = transform.GetChild(1).position;
-		transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, 0);
-		transform.position = Vector3.Lerp(lerpPosStart, lerpPosEnd, 0);
+
 	}
 	
 	// Update is called once per frame
@@ -36,6 +35,8 @@ public class QuaternionLerp : MonoBehaviour {
 	}
 
 	public void StartLerp (float duration = 2f) {
+		transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, 0);
+		transform.position = Vector3.Lerp(lerpPosStart, lerpPosEnd, 0);
 		lerpDuration = duration;
 		lerpTimer = Time.time;
 		isLerping = true;
