@@ -111,7 +111,7 @@ public class NavManager : MonoBehaviour {
 				else {
 					rating = 1;
 				}
-//				ratingObjects[rating].SetActive(true);
+			ratingObjects[rating].SetActive(true);
 				break;
 			}
 			directionalArrow.transform.LookAt(navigationPoints[currNavPoint].transform);
