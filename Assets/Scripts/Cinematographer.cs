@@ -18,7 +18,6 @@ public class Cinematographer : MonoBehaviour {
 	Quaternion lerpStart, lerpEnd;
 	public List<Transform> quaternions;
 	public List<GameObject> textUIObjects;
-	public List<Vector3> positions;
 	public List<float> timeAtEachObject;
 	int currentIndex = 0;
 	public bool hasStarted;
@@ -32,6 +31,8 @@ public class Cinematographer : MonoBehaviour {
 	public void RollCamera () {
 		pauseTimer = Time.time;
 		Camera.main.transform.rotation = quaternions[currentIndex].rotation;
+		Camera.main.transform.rotation = quaternions[currentIndex].position;
+
 		hasStarted = true;
 
 	}
@@ -74,7 +75,7 @@ public class Cinematographer : MonoBehaviour {
 		lerpEnd = quaternions[currentIndex].rotation;
 		lerpStart = Camera.main.transform.rotation;
 		lerpPositionStart = Camera.main.transform.position;
-		lerpPositionEnd = positions[currentIndex];
+		lerpPositionEnd = quaternions[currentIndex].position;
 
 		isLerping = true;
 
