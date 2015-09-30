@@ -59,6 +59,7 @@ public class NavManager : MonoBehaviour {
 		switch (gameState) {
 		case GameState.Idle :
 			if (Input.GetKeyDown(KeyCode.Space)){
+				NavBoatControl.s_instance.arrow.SetActive(false);
 				idlePage.SetActive(false);
 				reviewPage.SetActive(true);
 				gameState = GameState.Review;
@@ -94,11 +95,15 @@ public class NavManager : MonoBehaviour {
 				gamePlayPage.SetActive(true);
 				beep.Play();
 				StartClock();
+				NavBoatControl.s_instance.arrow.SetActive(true);
+
 			}
 
 			break;
 		case GameState.Gameplay :
 			if (hasReachedAllTargets) {
+				NavBoatControl.s_instance.arrow.SetActive(false);
+
 				Camera.main.GetComponent<HoverFollowCam>().PanOut();
 				gameState = GameState.Win;
 				NavBoatControl.s_instance.canMove = false;
@@ -111,7 +116,7 @@ public class NavManager : MonoBehaviour {
 				else {
 					rating = 1;
 				}
-			ratingObjects[rating].SetActive(true);
+				ratingObjects[rating].SetActive(true);
 				break;
 			}
 			directionalArrow.transform.LookAt(navigationPoints[currNavPoint].transform);
