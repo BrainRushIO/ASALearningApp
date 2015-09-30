@@ -31,7 +31,7 @@ public class Cinematographer : MonoBehaviour {
 	public void RollCamera () {
 		pauseTimer = Time.time;
 		Camera.main.transform.rotation = quaternions[currentIndex].rotation;
-		Camera.main.transform.rotation = quaternions[currentIndex].position;
+		Camera.main.transform.position = quaternions[currentIndex].position;
 
 		hasStarted = true;
 
