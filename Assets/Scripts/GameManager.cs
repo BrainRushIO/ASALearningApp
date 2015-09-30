@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void MainMenu() {
+		Application.LoadLevel(0);
+	}
+
 	void Update () 
 	{
 		switch (gameState) {

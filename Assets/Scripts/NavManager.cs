@@ -3,12 +3,13 @@ using System.Collections;
 using UnityEngine.UI;
 public class NavManager : MonoBehaviour {
 
-	public enum GameState {Idle, Review, Instructions, Gameplay, Win};
+	public enum GameState {Idle, Review, Instructions, CameraPan, Gameplay, Win};
 	public GameState gameState = GameState.Idle;
 	public GameObject[] navigationPoints;
 	public GameObject reviewPage, idlePage, instructionsPage, gamePlayPage, winPage;
 	public static NavManager s_instance;
 	public bool hasReachedAllTargets;
+	public bool hasFinishedCameraPanning;
 	int currNavPoint = 0;
 	public Text currTarget;
 	public AudioSource beep;
@@ -16,7 +17,7 @@ public class NavManager : MonoBehaviour {
 	float startTime, elapsedTime;
 	public Text timeText;
 	int rating;
-	GameObject[] ratingObjects;
+	public GameObject[] ratingObjects;
 	public GameObject directionalArrow;
 
 	void Awake() {
@@ -76,12 +77,20 @@ public class NavManager : MonoBehaviour {
 		case GameState.Instructions :
 			if (Input.GetKeyDown(KeyCode.Space)){
 				instructionsPage.SetActive(false);
+				Camera.main.GetComponent<Cinematographer>().RollCamera();
+				gameState = GameState.CameraPan;
+			}
+			break;
+		case GameState.CameraPan: 
+			if (hasFinishedCameraPanning){
+				instructionsPage.SetActive(false);
 				gameState = GameState.Gameplay;
 				NavBoatControl.s_instance.canMove = true;
 				gamePlayPage.SetActive(true);
 				beep.Play();
 				StartClock();
 			}
+
 			break;
 		case GameState.Gameplay :
 			if (hasReachedAllTargets) {

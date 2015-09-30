@@ -67,6 +67,7 @@ public class NavBoatControl : BoatBase {
 
 	void FixedUpdate () {
 		if (canMove) {
+			print ("CAN MOVE");
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
 				targetRudderRotation = Quaternion.Euler(0, rudderRotation,0);
