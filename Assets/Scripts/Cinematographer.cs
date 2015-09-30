@@ -71,7 +71,9 @@ public class Cinematographer : MonoBehaviour {
 	void GotoNextPosition () {
 		pauseTimer = Time.time;
 		lerpTimer = Time.time;
+//		textUIObjects[currentIndex].SetActive(false);
 		currentIndex++;
+//		textUIObjects[currentIndex].SetActive(true);
 		lerpEnd = quaternions[currentIndex].rotation;
 		lerpStart = Camera.main.transform.rotation;
 		lerpPositionStart = Camera.main.transform.position;

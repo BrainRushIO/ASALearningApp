@@ -79,6 +79,7 @@ public class NavManager : MonoBehaviour {
 		case GameState.Instructions :
 			if (Input.GetKeyDown(KeyCode.Space)){
 				instructionsPage.SetActive(false);
+				Camera.main.GetComponent<HoverFollowCam>().enabled = false;
 				Camera.main.GetComponent<Cinematographer>().RollCamera();
 				gameState = GameState.CameraPan;
 			}
@@ -86,6 +87,8 @@ public class NavManager : MonoBehaviour {
 		case GameState.CameraPan: 
 			if (hasFinishedCameraPanning){
 				instructionsPage.SetActive(false);
+				Camera.main.GetComponent<HoverFollowCam>().enabled = true;
+
 				gameState = GameState.Gameplay;
 				NavBoatControl.s_instance.canMove = true;
 				gamePlayPage.SetActive(true);
