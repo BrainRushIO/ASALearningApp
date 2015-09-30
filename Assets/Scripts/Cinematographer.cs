@@ -23,7 +23,7 @@ public class Cinematographer : MonoBehaviour {
 	int currentIndex = 0;
 	public bool hasStarted;
 	float pauseTimer;
-
+	Vector3 lerpPositionStart, lerpPositionEnd;
 	//lerp
 	float lerpTimer;
 	float lerpDuration = 5f;
@@ -40,15 +40,26 @@ public class Cinematographer : MonoBehaviour {
 	void Update () {
 		if (hasStarted) {
 			if (Time.time - pauseTimer > timeAtEachObject[currentIndex]) {
-				GotoNextPosition();
+				if (currentIndex < quaternions.Count - 1) {
+					GotoNextPosition();
+				}
+				else {
+					Camera.main.GetComponent<HoverFollowCam>().enabled = true;
+					NavManager.s_instance.hasFinishedCameraPanning = true;
+					hasStarted = false;
+				}
+
 			}
 
 
 			if (isLerping) {
 				float fraction = Time.time - lerpTimer / lerpDuration;
 				Camera.main.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, fraction);
+				Camera.main.transform.position = Vector3.Lerp (lerpPositionStart, lerpPositionEnd, fraction);
 				if (fraction > .9999f) {
 					Camera.main.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, 1f);
+					Camera.main.transform.position = Vector3.Lerp (lerpPositionStart, lerpPositionEnd, 1f);
+
 					isLerping = false;
 				}
 			}
@@ -62,6 +73,9 @@ public class Cinematographer : MonoBehaviour {
 		currentIndex++;
 		lerpEnd = quaternions[currentIndex].rotation;
 		lerpStart = Camera.main.transform.rotation;
+		lerpPositionStart = Camera.main.transform.position;
+		lerpPositionEnd = positions[currentIndex];
+
 		isLerping = true;
 
 	}
