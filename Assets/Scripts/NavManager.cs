@@ -31,6 +31,7 @@ public class NavManager : MonoBehaviour {
 
 	public void SwitchNavigationPoint() {
 		navigationPoints[currNavPoint].transform.GetChild(0).gameObject.SetActive(false);
+
 		currNavPoint++;
 		if (currNavPoint < navigationPoints.Length) {
 			navigationPoints[currNavPoint].transform.GetChild(0).gameObject.SetActive(true);
@@ -40,6 +41,7 @@ public class NavManager : MonoBehaviour {
 			winPage.SetActive(true);
 			gamePlayPage.SetActive(false);
 			NavBoatControl.s_instance.transform.GetChild(0).gameObject.SetActive(false);
+
 		}
 
 	}
