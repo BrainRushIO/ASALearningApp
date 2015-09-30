@@ -54,9 +54,9 @@ public class Cinematographer : MonoBehaviour {
 
 
 			if (isLerping) {
-				float fraction = (Time.time - lerpTimer)/ lerpDuration;
+				float fraction = (Time.time - lerpTimer	)/ lerpDuration;
 				Camera.main.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, fraction);
-				Camera.main.transform.position = Vector3.Lerp (lerpPositionStart, lerpPositionEnd, fraction);
+				Camera.main.transform.position = Vector3.Lerp (lerpPositionStart, lerpPositionEnd, fraction * fraction * (3.0f - 2.0f * fraction));
 				if (fraction > .9999f) {
 					Camera.main.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, 1f);
 					Camera.main.transform.position = Vector3.Lerp (lerpPositionStart, lerpPositionEnd, 1f);
