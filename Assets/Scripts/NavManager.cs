@@ -45,6 +45,9 @@ public class NavManager : MonoBehaviour {
 		}
 
 	}
+	public void MainMenu() {
+		Application.LoadLevel(0);
+	}
 
 	public string ReturnCurrNavPointName() {
 		if (currNavPoint<navigationPoints.Length) {
@@ -89,13 +92,13 @@ public class NavManager : MonoBehaviour {
 			if (hasFinishedCameraPanning){
 				instructionsPage.SetActive(false);
 				Camera.main.GetComponent<HoverFollowCam>().enabled = true;
+				NavBoatControl.s_instance.arrow.SetActive(true);
 
 				gameState = GameState.Gameplay;
 				NavBoatControl.s_instance.canMove = true;
 				gamePlayPage.SetActive(true);
 				beep.Play();
 				StartClock();
-				NavBoatControl.s_instance.arrow.SetActive(true);
 
 			}
 
@@ -106,6 +109,8 @@ public class NavManager : MonoBehaviour {
 
 				Camera.main.GetComponent<HoverFollowCam>().PanOut();
 				gameState = GameState.Win;
+				GameObject.FindGameObjectWithTag("arrow").SetActive(false);
+				directionalArrow.SetActive(false);
 				NavBoatControl.s_instance.canMove = false;
 				if (elapsedTime > 200f) {
 					rating = 0;
@@ -126,7 +131,6 @@ public class NavManager : MonoBehaviour {
 			                                   
 			break;
 		case GameState.Win :
-			directionalArrow.SetActive(false);
 			break;
 		}
 

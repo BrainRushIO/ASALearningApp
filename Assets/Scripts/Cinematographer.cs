@@ -25,14 +25,14 @@ public class Cinematographer : MonoBehaviour {
 	Vector3 lerpPositionStart, lerpPositionEnd;
 	//lerp
 	float lerpTimer;
-	float lerpDuration = 5f;
+	float lerpDuration = 3f;
 	bool isLerping;
 
 	public void RollCamera () {
 		pauseTimer = Time.time;
 		Camera.main.transform.rotation = quaternions[currentIndex].rotation;
 		Camera.main.transform.position = quaternions[currentIndex].position;
-
+		textUIObjects[currentIndex].SetActive(true);
 		hasStarted = true;
 
 	}
@@ -45,6 +45,7 @@ public class Cinematographer : MonoBehaviour {
 					GotoNextPosition();
 				}
 				else {
+					textUIObjects[currentIndex].SetActive(false);
 					Camera.main.GetComponent<HoverFollowCam>().enabled = true;
 					NavManager.s_instance.hasFinishedCameraPanning = true;
 					hasStarted = false;
@@ -71,14 +72,13 @@ public class Cinematographer : MonoBehaviour {
 	void GotoNextPosition () {
 		pauseTimer = Time.time;
 		lerpTimer = Time.time;
-//		textUIObjects[currentIndex].SetActive(false);
+		textUIObjects[currentIndex].SetActive(false);
 		currentIndex++;
-//		textUIObjects[currentIndex].SetActive(true);
+		textUIObjects[currentIndex].SetActive(true);
 		lerpEnd = quaternions[currentIndex].rotation;
 		lerpStart = Camera.main.transform.rotation;
 		lerpPositionStart = Camera.main.transform.position;
 		lerpPositionEnd = quaternions[currentIndex].position;
-
 		isLerping = true;
 
 	}

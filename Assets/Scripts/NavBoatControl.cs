@@ -95,7 +95,8 @@ public class NavBoatControl : BoatBase {
 
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag == "NavTarget" && other.name == NavManager.s_instance.ReturnCurrNavPointName() && Vector3.Distance(transform.position, other.transform.position) <10f) {
+		print (other.tag + " " + NavManager.s_instance.ReturnCurrNavPointName());
+		if (other.tag == "NavTarget" && other.name == NavManager.s_instance.ReturnCurrNavPointName() && Vector3.Distance(transform.position, other.transform.position) <100f) {
 			NavManager.s_instance.SwitchNavigationPoint();
 			correct.Play();
 		}
