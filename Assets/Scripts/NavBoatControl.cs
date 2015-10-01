@@ -66,8 +66,9 @@ public class NavBoatControl : BoatBase {
 	}
 
 	void FixedUpdate () {
+	
 		if (canMove) {
-			print ("CAN MOVE");
+//			print ("CAN MOVE");
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
 				targetRudderRotation = Quaternion.Euler(0, rudderRotation,0);
@@ -95,12 +96,22 @@ public class NavBoatControl : BoatBase {
 
 
 	void OnTriggerEnter(Collider other) {
-		print (other.tag + " " + NavManager.s_instance.ReturnCurrNavPointName());
+//		print (other.tag + " " + NavManager.s_instance.ReturnCurrNavPointName());
 		if (other.tag == "NavTarget" && other.name == NavManager.s_instance.ReturnCurrNavPointName() && Vector3.Distance(transform.position, other.transform.position) <100f) {
 			NavManager.s_instance.SwitchNavigationPoint();
 			correct.Play();
 		}
+
+		if (other.tag == "CollisionObject") {
+			body.AddForce (transform.forward * -1 * currThrust);
+		}
+	
 	}
 
+	void OnTriggerStay(Collider other){
+		if (other.tag == "collisionObject") {
+			body.AddForce(transform.forward * -1 * currThrust);
+		}
+	}
 
 }
