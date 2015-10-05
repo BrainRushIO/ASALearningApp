@@ -7,8 +7,8 @@ public class NavBoatControl : BoatBase {
 	public enum BoatSideFacingWind {Port, Starboard};
 	public static NavBoatControl s_instance;
 
-	public float currThrust = 500f;
-	float weakThrust = 150f, strongThrust = 500f;
+	float currThrust = 1500f;
+	float weakThrust = 150f, strongThrust = 1500f;
 	float angleToAdjustTo;
 	float turnStrength = 5f, weakTurnStrength = 3f, strongTurnStrength = 5f;
 	float turningRate = 60f;
@@ -65,7 +65,6 @@ public class NavBoatControl : BoatBase {
 		else {
 			isNoSailZone = false;
 			currThrust = strongThrust;
-
 			turnStrength = strongTurnStrength;
 		}
 		if (NavManager.s_instance.gameState == NavManager.GameState.Win) {

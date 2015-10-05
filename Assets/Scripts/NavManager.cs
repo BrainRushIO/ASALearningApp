@@ -115,7 +115,7 @@ public class NavManager : MonoBehaviour {
 				if (elapsedTime > 200f) {
 					rating = 0;
 				}
-				else if (elapsedTime < 100f) {
+				else if (elapsedTime < 140f) {
 					rating = 2;
 				}
 				else {
