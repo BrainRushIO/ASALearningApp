@@ -150,9 +150,9 @@ public class GameManager : MonoBehaviour {
 		case GameState.WinScreen :
 			GameplayPage.SetActive(false);
 			winPage.SetActive(true);
-			if ((Time.time - startTime) > exitTime) {
-				GotoNextModule();
-			}
+//			if ((Time.time - startTime) > exitTime) {
+//				GotoNextModule();
+//			}
 			break;
 		}
 	}

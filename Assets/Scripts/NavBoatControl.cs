@@ -7,12 +7,14 @@ public class NavBoatControl : BoatBase {
 	public enum BoatSideFacingWind {Port, Starboard};
 	public static NavBoatControl s_instance;
 
-	public float currThrust = 500;
+	public float currThrust = 500f;
+	float weakThrust = 150f, strongThrust = 500f;
 	float angleToAdjustTo;
-	float turnStrength = 5f, weakTurnStrength = 5f, strongTurnStrength = 5f;
+	float turnStrength = 5f, weakTurnStrength = 3f, strongTurnStrength = 5f;
 	float turningRate = 60f;
 	float rudderRotation =40f;
 	float deadZone = 20f;
+	float noZone = 5f;
 
 	Quaternion comeAboutStart, comeAboutEnd;
 	Quaternion targetRudderRotation = Quaternion.identity;
@@ -53,11 +55,17 @@ public class NavBoatControl : BoatBase {
 		boatKeel.SetFloat("rotation", animatorBlendVal);
 
 		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < deadZone) {
+			currThrust = weakThrust;
+			turnStrength = weakTurnStrength;
+		}
+		else if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < noZone) {
 			isNoSailZone = true;
 			turnStrength = weakTurnStrength;
 		}
 		else {
 			isNoSailZone = false;
+			currThrust = strongThrust;
+
 			turnStrength = strongTurnStrength;
 		}
 		if (NavManager.s_instance.gameState == NavManager.GameState.Win) {
