@@ -106,9 +106,7 @@ public class NavManager : MonoBehaviour {
 		case GameState.Gameplay :
 			if (hasReachedAllTargets) {
 				NavBoatControl.s_instance.arrow.SetActive(false);
-
 				Camera.main.GetComponent<HoverFollowCam>().PanOut();
-				gameState = GameState.Win;
 				GameObject.FindGameObjectWithTag("arrow").SetActive(false);
 				directionalArrow.SetActive(false);
 				NavBoatControl.s_instance.canMove = false;
@@ -122,6 +120,7 @@ public class NavManager : MonoBehaviour {
 					rating = 1;
 				}
 				ratingObjects[rating].SetActive(true);
+				gameState = GameState.Win;
 				break;
 			}
 			directionalArrow.transform.LookAt(navigationPoints[currNavPoint].transform);

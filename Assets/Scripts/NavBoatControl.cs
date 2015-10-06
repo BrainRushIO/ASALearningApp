@@ -6,20 +6,18 @@ public class NavBoatControl : BoatBase {
 	Rigidbody body;
 	public enum BoatSideFacingWind {Port, Starboard};
 	public static NavBoatControl s_instance;
-
-	float currThrust = 1500f;
+	public ParticleSystem left, right;
+	float currThrust = 0f;
 	float weakThrust = 150f, strongThrust = 1500f;
 	float angleToAdjustTo;
 	float turnStrength = 5f, weakTurnStrength = 3f, strongTurnStrength = 5f;
 	float turningRate = 60f;
 	float rudderRotation =40f;
 	float deadZone = 20f;
-	float noZone = 5f;
 
 	Quaternion comeAboutStart, comeAboutEnd;
 	Quaternion targetRudderRotation = Quaternion.identity;
 
-	bool isNoSailZone;
 	public bool canMove = false;
 	public AudioSource correct;
 	public Animator boatKeel;
@@ -42,31 +40,48 @@ public class NavBoatControl : BoatBase {
 	}
 
 	void Update () {
+
 		MastRotation();
 
 		//add keeling into the boat rotation
 		float animatorBlendVal;
+
 		if (angleWRTWind < 360f && angleWRTWind > 180f) {
 			animatorBlendVal = (angleWRTWind-180f)/360f;
 		}
 		else {
 			animatorBlendVal = (angleWRTWind/360f + .5f);
 		}
+
 		boatKeel.SetFloat("rotation", animatorBlendVal);
 
 		if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < deadZone) {
-			currThrust = weakThrust;
+			if(currThrust > 0) {
+				currThrust -= 10f;
+			}
+			else {
+				currThrust = 0;
+				left.enableEmission = false;
+				right.enableEmission = false;
+
+			}
 			turnStrength = weakTurnStrength;
+
 		}
-		else if (Mathf.Abs(Vector3.Angle(WindManager.s_instance.directionOfWind, transform.forward)) < noZone) {
-			isNoSailZone = true;
-			turnStrength = weakTurnStrength;
-		}
+	
 		else {
-			isNoSailZone = false;
-			currThrust = strongThrust;
+			left.enableEmission = true;
+			right.enableEmission = true;
+			if (currThrust < strongThrust) {
+				currThrust += 10f;
+			}
+			else {
+				currThrust = strongThrust;
+			}
 			turnStrength = strongTurnStrength;
+
 		}
+		print (currThrust + "CT");
 		if (NavManager.s_instance.gameState == NavManager.GameState.Win) {
 			arrow.SetActive(false);
 		}
@@ -75,7 +90,6 @@ public class NavBoatControl : BoatBase {
 	void FixedUpdate () {
 	
 		if (canMove) {
-//			print ("CAN MOVE");
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				body.AddRelativeTorque (-Vector3.up*turnStrength);
 				targetRudderRotation = Quaternion.Euler(0, rudderRotation,0);
@@ -94,9 +108,7 @@ public class NavBoatControl : BoatBase {
 			rudderR.transform.localRotation = Quaternion.RotateTowards(rudderR.transform.localRotation, targetRudderRotation, turningRate * Time.deltaTime);
 			rudderL.transform.localRotation = Quaternion.RotateTowards(rudderL.transform.localRotation, targetRudderRotation, turningRate * Time.deltaTime);
 
-			if (!isNoSailZone) {
-				body.AddForce (transform.forward * currThrust);
-			}
+			body.AddForce (transform.forward * currThrust);
 		}
 	}
 
