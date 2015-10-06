@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	float currMastery;
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
 	public AudioSource wrong, correct, beep, waterPaddle;
+	public GameObject circle1, circle2;
 
 	public GameObject IdlePage, ReviewPage,TestPage, InstructionsPage, GameplayPage, winPage;
 
@@ -116,6 +117,8 @@ public class GameManager : MonoBehaviour {
 			CheckForSequenceMastery(); //eliminate mastered sequences
 			InitiateTerm();
 			gameState = GameState.Playing;
+			circle2.SetActive(true);
+			circle1.SetActive(false);
 			break;
 		case GameState.Playing :
 			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
@@ -174,6 +177,8 @@ public class GameManager : MonoBehaviour {
 
 	}
 	bool AnswerCorrect(){
+		circle1.SetActive(false);
+		circle2.SetActive(true);
 		correct.Play ();
 		wrongAnswerText.enabled = false;
 		correctText.enabled = true;
@@ -187,6 +192,8 @@ public class GameManager : MonoBehaviour {
 
 	}
 	void AnswerWrong(){
+		circle2.SetActive(false);
+		circle1.SetActive(true);
 		wrong.Play ();
 		AdjustMasteryMeter(false);
 		timer.timesUp = true;
