@@ -209,7 +209,6 @@ public class GameManager : MonoBehaviour {
 		if (didAnswerCorrect && !timer.timesUp) {
 			
 			listOfPOSTerms[randomListPoints[currIndex].initIndex].mastery += 1;
-			print ("mastery added");
 		}
 		
 		else if (!didAnswerCorrect) {
