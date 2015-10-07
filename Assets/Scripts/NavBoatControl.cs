@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class NavBoatControl : BoatBase {
 
@@ -8,12 +9,12 @@ public class NavBoatControl : BoatBase {
 	public static NavBoatControl s_instance;
 	public ParticleSystem left, right;
 	float currThrust = 0f;
-	float weakThrust = 150f, strongThrust = 1500f;
+	float weakThrust = 150f, strongThrust = 2500f;
 	float angleToAdjustTo;
-	float turnStrength = 5f, weakTurnStrength = 3f, strongTurnStrength = 5f;
+	float turnStrength = 5f, weakTurnStrength = 4f, strongTurnStrength = 5f;
 	float turningRate = 60f;
 	float rudderRotation =40f;
-	float deadZone = 20f;
+	float deadZone = 45f;
 
 	Quaternion comeAboutStart, comeAboutEnd;
 	Quaternion targetRudderRotation = Quaternion.identity;
@@ -25,6 +26,8 @@ public class NavBoatControl : BoatBase {
 	public GameObject rudderR, rudderL;
 	public GameObject redNavObj, greenNavObj;
 	public Transform red1,red2,green1,green2;
+
+	public Text pointOfSail;
 
 	void Start () {
 		body = GetComponent<Rigidbody>();
@@ -51,6 +54,42 @@ public class NavBoatControl : BoatBase {
 		}
 		else {
 			animatorBlendVal = (angleWRTWind/360f + .5f);
+		}
+
+		if ((angleWRTWind < 360f && angleWRTWind > 315f) ||
+			(angleWRTWind > 0f && angleWRTWind < 45f)) {
+			pointOfSail.text = "In Irons";
+		}
+		else if ((angleWRTWind < 315f && angleWRTWind > 293f) ||
+		    (angleWRTWind > 0f && angleWRTWind < 45f)) {
+			pointOfSail.text = "Close-Hauled Starboard Tack";
+		}
+		else if ((angleWRTWind < 293f && angleWRTWind > 270f) ||
+		         (angleWRTWind > 0f && angleWRTWind < 45f)) {
+			pointOfSail.text = "Close Reach Starboard Tack";
+		}
+		else if ((angleWRTWind < 270f && angleWRTWind > 240f) ||
+		         (angleWRTWind > 0f && angleWRTWind < 45f)) {
+			pointOfSail.text = "Beam Reach Starboard Tack";
+		}
+		else if ((angleWRTWind < 240f && angleWRTWind > 190f) ||
+		         (angleWRTWind > 0f && angleWRTWind < 45f)) {
+			pointOfSail.text = "Broad Reach Starboard Tack";
+		}
+		else if (angleWRTWind < 190f && angleWRTWind > 170f) {
+			pointOfSail.text = "Run";
+		}
+		else if (angleWRTWind > 120f && angleWRTWind < 170f) {
+			pointOfSail.text = "Broad Reach Port Tack";
+		}
+		else if (angleWRTWind > 90f && angleWRTWind < 120f) {
+			pointOfSail.text = "Beam Reach Port Tack";
+		}
+		else if (angleWRTWind > 66f && angleWRTWind < 90f) {
+			pointOfSail.text = "Close Reach Port Tack";
+		}
+		else if (angleWRTWind > 45f && angleWRTWind < 66f){
+			pointOfSail.text = "Close-Hauled Port Tack";
 		}
 
 		boatKeel.SetFloat("rotation", animatorBlendVal);
