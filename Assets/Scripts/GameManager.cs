@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour {
 	bool userClickedStart = true;
 	int requiredMastery = 2;
 	int currIndex = 0;
+	int currentLevel = 1;
 	int totalMastery;
+	float[] randomRotateValues = {35f,70f, 100f, 140f, 170f, 200f, 230f, 280f, 320f};
 	float startTime, exitTime = 4f;
 	float currMastery;
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
@@ -129,6 +131,9 @@ public class GameManager : MonoBehaviour {
 		case GameState.CheckAnswer :
 			if (Checker()){
 				gameState = GameState.CorrectAnswer;
+				if (currentLevel == 1) {
+					RotateCameraRandom();
+				}
 			}
 			else {
 				gameState = GameState.WrongAnswer;
@@ -139,6 +144,7 @@ public class GameManager : MonoBehaviour {
 			if (AnswerCorrect()){
 				WinRound();
 				gameState = GameState.WinScreen;
+				currentLevel++;
 			}
 			else {
 				gameState = GameState.SetRound;
@@ -237,6 +243,10 @@ public class GameManager : MonoBehaviour {
 		masteryMeter.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "Mastery: " + Mathf.FloorToInt(masteryMeter.value*100f).ToString()+"%";
 	}
 
+	void RotateCameraRandom() {
+		float chooseRandomRotateVal = randomRotateValues[Random.Range(0,randomRotateValues.Length-1)];
+		Camera.main.transform.RotateAround(new Vector3(0,1f,0), chooseRandomRotateVal);
+	}
 
 	public void CheckForSequenceMastery() {
 		if (randomListPoints.Count == 0) {
