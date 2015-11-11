@@ -6,7 +6,7 @@ public class posAnimState : MonoBehaviour {
 
 	public Animator boatAnim;
 	public GameManager gameManager;
-	public Text displayPOS; 
+	public Text displayPOS, displayPOS2; 
 
 	// Use this for initialization
 	void Start () {
@@ -31,59 +31,69 @@ public class posAnimState : MonoBehaviour {
 					boatAnim.SetTrigger("Irons");
 					gameManager.currAnimState = "In Irons";
 					displayPOS.text = "In Irons - the boat is head to wind (0 degrees)";
+					displayPOS2.text = "";
+
 					break;
 				case "PTCloseHaul":
 					boatAnim.SetTrigger("PTCloseHaul");
 					gameManager.currAnimState = "Close Hauled Port Tack";
-					displayPOS.text = "Close Hauled - the boat is sailing as close to the wind as possible (~45 degrees)";
+					displayPOS.text = "Close Hauled on a " + "<color=#FF0000> port tack </color>";
+					displayPOS2.text = "the boat is sailing as close to the wind as possible (~45 degrees)";
 
 					break;
 				case "PTCloseReach":
 					boatAnim.SetTrigger("PTCloseReach");
 					gameManager.currAnimState = "Close Reach Port Tack";
-					displayPOS.text = "Close Reach - the point of sail between close-hauled and beam reach. (~60 degrees)";
+					displayPOS.text = "Close Reach on a " + "<color=#FF0000> port tack </color>";
+					displayPOS2.text = "the point of sail between close-hauled and beam reach. (~60 degrees";
 
 					break;
 
 				case "PTBeamReach":
 					boatAnim.SetTrigger ("PTBeamReach");
 					gameManager.currAnimState = "Beam Reach Port Tack";
-					displayPOS.text = "Beam Reach - the wind is abeam of the boat (~90 degrees)";
+					displayPOS.text = "Beam Reach on a " + "<color=#FF0000> port tack </color>"; 
+					displayPOS2.text = "The wind is abeam of the boat (~90 degrees)";
 
 					break;
 
 				case "PTBroadReach":
 					boatAnim.SetTrigger("PTBroadReach");
 					gameManager.currAnimState = "Broad Reach Port Tack";
-					displayPOS.text = "Broad Reach - the point of sail between a beam reach and a run (~135 degrees)";
-
+					displayPOS.text = "Broad Reach on a " + "<color=#FF0000> port tack </color>"; 
+					displayPOS2.text = "The point of sail between a beam reach and a run (~135 degrees)";
 					break;
 				case "Run":
 					boatAnim.SetTrigger("Run");
 					gameManager.currAnimState = "Run";
 					displayPOS.text = "Run - the point of sail on which the wind is aft (180 degrees)";
+					displayPOS2.text = "";
 
 					break;
 				case "STBroadReach":
 					boatAnim.SetTrigger("STBroadReach");
 					gameManager.currAnimState = "Broad Reach Starboard Tack";
-					displayPOS.text = "Broad Reach - the point of sail between a beam reach and a run (~135 degrees)";
+					displayPOS.text = "Broad Reach on a " + "<color=#00FF00> starboard tack </color>";
+					displayPOS2.text = "The point of sail between a beam reach and a run (~135 degrees)";
 					break;
 				case "STBeamReach":
 					boatAnim.SetTrigger("STBeamReach");
 					gameManager.currAnimState = "Beam Reach Starboard Tack";
-					displayPOS.text = "Beam Reach - the wind is abeam of the boat (~90 degrees)";
+					displayPOS.text = "Beam Reach on a " + "<color=#00FF00> starboard tack </color>"; 
+					displayPOS2.text = "The wind is abeam of the boat (~90 degrees)";
 
 					break;
 				case "STCloseReach":
 					boatAnim.SetTrigger("STCloseReach");
 					gameManager.currAnimState = "Close Reach Starboard Tack";
-					displayPOS.text = "Close Reach - the point of sail between close-hauled and beam reach. (~60 degrees)";
+					displayPOS.text = "Close Reach on a " + "<color=#00FF00> starboard tack </color>";
+					displayPOS2.text = "The point of sail between close-hauled and beam reach. (~60 degrees)";
 					break;
 				case "STCloseHaul":
 					boatAnim.SetTrigger("STCloseHaul");
 					gameManager.currAnimState = "Close Hauled Starboard Tack";
-					displayPOS.text = "Close Hauled - the boat is sailing as close to the wind as possible (~45 degrees)";
+					displayPOS.text = "Close Hauled on a " + "<color=#00FF00> starboard tack </color>";  
+					displayPOS2.text = "The boat is sailing as close to the wind as possible (~45 degrees)";
 					break;
 
 

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	bool userClickedStart = true;
 	int requiredMastery = 2;
 	int currIndex = 0;
-	int currentLevel = 1;
+	int currentLevel = 0;
 	int totalMastery;
 	float[] randomRotateValues = {35f,70f, 100f, 140f, 170f, 200f, 230f, 280f, 320f};
 	float startTime, exitTime = 4f;
@@ -53,19 +53,12 @@ public class GameManager : MonoBehaviour {
 		case GameState.Idle :
 			if (Input.GetKeyDown(KeyCode.Space)){
 				IdlePage.SetActive(false);
-				ReviewPage.SetActive(true);
-				gameState = GameState.Review;
-				beep.Play();
-			}
-			break;
-		case GameState.Review :
-			if (Input.GetKeyDown(KeyCode.Space)){
-				ReviewPage.SetActive(false);
 				TestPage.SetActive(true);
 				gameState = GameState.TestPage;
 				beep.Play();
 			}
 			break;
+	
 		case GameState.TestPage :
 			if (Input.GetKeyDown(KeyCode.Space)){
 				TestPage.SetActive(false);
@@ -159,6 +152,19 @@ public class GameManager : MonoBehaviour {
 		case GameState.WinScreen :
 			GameplayPage.SetActive(false);
 			winPage.SetActive(true);
+			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
+				gameState = GameState.Config;
+				currMastery = 0;
+				masteryMeter.value = 0;
+				currentLevel = 1;
+				masteryMeter.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "Mastery 0%";
+				GameplayPage.SetActive(true);
+				winPage.SetActive(false);
+				foreach (Term x in listOfPOSTerms) {
+					x.mastery = 0;
+				}
+
+			}
 //			if ((Time.time - startTime) > exitTime) {
 //				GotoNextModule();
 //			}
