@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	//Manages the Points of Sail Module
-	public enum GameState {Idle, Review, Instructions, TestPage, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen};
+	public enum GameState {Idle, Review, Instructions, TestPage, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen, Challenge};
 	public GameState gameState;
 	public List<Term> listOfPOSTerms,tempListPointTerms,randomListPoints;
 	List<pointOfSail> allPoints;
@@ -49,6 +49,15 @@ public class GameManager : MonoBehaviour {
 
 	void Update () 
 	{
+		if (isCameraRotating) {
+			float fracJourney = (Time.time - lerpTime)/ lerpDuration;
+			if (fracJourney > .99f) {
+				isCameraRotating = false;
+				fracJourney = 1;
+
+			}
+			Camera.main.transform.rotation = Quaternion.Lerp(lerpStart, lerpFinish, fracJourney);
+		}
 		switch (gameState) {
 		case GameState.Idle :
 			if (Input.GetKeyDown(KeyCode.Space)){
@@ -120,9 +129,13 @@ public class GameManager : MonoBehaviour {
 				gameState = GameState.CheckAnswer;
 			}
 			break;
-			
+		case GameState.Challenge :
+			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
+				gameState = GameState.SetRound;
+			}
+			break;
 		case GameState.CheckAnswer :
-			if (Checker()){
+			if (Checker()) {
 				gameState = GameState.CorrectAnswer;
 				if (currentLevel == 1) {
 					RotateCameraRandom();
@@ -165,9 +178,6 @@ public class GameManager : MonoBehaviour {
 				}
 
 			}
-//			if ((Time.time - startTime) > exitTime) {
-//				GotoNextModule();
-//			}
 			break;
 		}
 	}
@@ -249,9 +259,22 @@ public class GameManager : MonoBehaviour {
 		masteryMeter.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "Mastery: " + Mathf.FloorToInt(masteryMeter.value*100f).ToString()+"%";
 	}
 
+	bool isCameraRotating;
+	float lerpTime;
+	float lerpDuration = 3f;
+	Quaternion lerpStart;
+	Quaternion lerpFinish;
+
+
 	void RotateCameraRandom() {
 		float chooseRandomRotateVal = randomRotateValues[Random.Range(0,randomRotateValues.Length-1)];
-		Camera.main.transform.RotateAround(new Vector3(0,1f,0), chooseRandomRotateVal);
+		lerpTime = Time.time;
+		lerpStart = Camera.main.transform.rotation;
+		lerpFinish = Quaternion.Euler (new Vector3 (0, chooseRandomRotateVal, 0));
+	}
+
+	public void SwitchToChallenge () {
+
 	}
 
 	public void CheckForSequenceMastery() {
