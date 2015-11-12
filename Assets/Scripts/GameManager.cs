@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour {
 		case GameState.Challenge :
 			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
 				gameState = GameState.Config;
+				beep.Play ();
 				challengePage.SetActive(false);
 				GameplayPage.SetActive(true);
 			}
@@ -267,7 +268,7 @@ public class GameManager : MonoBehaviour {
 
 	bool isCameraRotating;
 	float lerpTime;
-	float lerpDuration = 3f;
+	float lerpDuration = .5f;
 	Quaternion lerpStart;
 	Quaternion lerpFinish;
 
@@ -276,10 +277,12 @@ public class GameManager : MonoBehaviour {
 		float chooseRandomRotateVal = randomRotateValues[Random.Range(0,randomRotateValues.Length-1)];
 		lerpTime = Time.time;
 		lerpStart = Camera.main.transform.rotation;
-		lerpFinish = Quaternion.Euler (new Vector3 (0, chooseRandomRotateVal, 0));
+		lerpFinish = Quaternion.Euler (new Vector3 (90, chooseRandomRotateVal, 0));
+		isCameraRotating = true;
 	}
 
 	public void SwitchToChallenge () {
+		beep.Play ();
 		IdlePage.SetActive (false);
 		GameplayPage.SetActive (false);
 		challengePage.SetActive (true);
