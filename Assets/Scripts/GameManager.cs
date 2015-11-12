@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
 	int currIndex = 0;
 	int currentLevel = 0;
 	int totalMastery;
+	int numberCorrect, numberWrong;
+
 	float[] randomRotateValues = {35f,70f, 100f, 140f, 170f, 200f, 230f, 280f, 320f};
 	float startTime, exitTime = 4f;
 	float currMastery;
@@ -22,7 +24,8 @@ public class GameManager : MonoBehaviour {
 	public AudioSource wrong, correct, beep, waterPaddle;
 	public GameObject circle1, circle2;
 
-	public GameObject IdlePage, ReviewPage,TestPage, InstructionsPage, GameplayPage, winPage;
+	public GameObject IdlePage, ReviewPage,TestPage, InstructionsPage, GameplayPage, winPage, challengePage;
+	GameObject currentPage;
 
 	public TextAsset pointsOfSailTxt;
 	public Slider masteryMeter;
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour {
 		else {
 			Destroy(gameObject);
 		}
+		currentPage = IdlePage;
 	}
 
 	public void MainMenu() {
@@ -132,6 +136,8 @@ public class GameManager : MonoBehaviour {
 		case GameState.Challenge :
 			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
 				gameState = GameState.SetRound;
+				challengePage.SetActive(false);
+				GameplayPage.SetActive(true);
 			}
 			break;
 		case GameState.CheckAnswer :
@@ -274,7 +280,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SwitchToChallenge () {
-
+		IdlePage.SetActive (false);
+		GameplayPage.SetActive (false);
+		challengePage.SetActive (true);
+		currentLevel = 1;
+		numberWrong = 0;
+		numberCorrect = 0;
+		gameState = GameState.Challenge;
 	}
 
 	public void CheckForSequenceMastery() {
