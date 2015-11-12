@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour {
 	int totalMastery;
 	int numberCorrect, numberWrong;
 
+	public ColorChange thisColorChange;
+	public BreatheAnimation thisBreatheAnimation;
+
 	float[] randomRotateValues = {35f,70f, 100f, 140f, 170f, 200f, 230f, 280f, 320f};
 	float startTime, exitTime = 4f;
 	float currMastery;
@@ -29,9 +32,11 @@ public class GameManager : MonoBehaviour {
 
 	public TextAsset pointsOfSailTxt;
 	public Slider masteryMeter;
+	public Text youbeatlevel2;
 	public Text currentQuestion;
 	public Text wrongAnswerText;
 	public Text correctText;
+	public Text winPercentage;
 	public Timer1 timer;
 	public string currAnimState;
 
@@ -53,6 +58,13 @@ public class GameManager : MonoBehaviour {
 
 	void Update () 
 	{
+//		if (Input.GetKeyDown (KeyCode.A)) {
+//			numberWrong = 1;
+//			numberCorrect = 1;
+//			masteryMeter.value = 1;
+//			GameplayPage.SetActive(false);
+//			winPage.SetActive(true);
+//		}
 		if (isCameraRotating) {
 			float fracJourney = (Time.time - lerpTime)/ lerpDuration;
 			if (fracJourney > .99f) {
@@ -157,7 +169,6 @@ public class GameManager : MonoBehaviour {
 			if (AnswerCorrect()){
 				WinRound();
 				gameState = GameState.WinScreen;
-				currentLevel++;
 			}
 			else {
 				gameState = GameState.SetRound;
@@ -172,19 +183,12 @@ public class GameManager : MonoBehaviour {
 		case GameState.WinScreen :
 			GameplayPage.SetActive(false);
 			winPage.SetActive(true);
-			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
-				gameState = GameState.Config;
-				currMastery = 0;
-				masteryMeter.value = 0;
-				currentLevel = 1;
-				masteryMeter.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "Mastery 0%";
-				GameplayPage.SetActive(true);
-				winPage.SetActive(false);
-				foreach (Term x in listOfPOSTerms) {
-					x.mastery = 0;
-				}
-
+			if (currentLevel == 1) {
+				thisBreatheAnimation.enabled = true;
+				thisColorChange.enabled = true;
+				youbeatlevel2.text = "you beat level 2";
 			}
+			winPercentage.text = "Your score is " + Mathf.Ceil((float)(numberCorrect/numberWrong)*100)+"%";
 			break;
 		}
 	}
@@ -213,6 +217,7 @@ public class GameManager : MonoBehaviour {
 		correctText.enabled = true;
 		correctText.GetComponent<Fader>().StartFadeOut();
 		AdjustMasteryMeter(true);
+		numberCorrect++;
 		if (masteryMeter.value > .97f ) {
 			return true;
 		} else { 
@@ -221,6 +226,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 	void AnswerWrong(){
+		numberWrong--;
 		circle2.SetActive(false);
 		circle1.SetActive(true);
 		wrong.Play ();
@@ -289,6 +295,19 @@ public class GameManager : MonoBehaviour {
 		currentLevel = 1;
 		numberWrong = 0;
 		numberCorrect = 0;
+		if (gameState == GameState.Config) {
+			numberWrong = 0;
+			numberCorrect = 0;
+			currMastery = 0;
+			masteryMeter.value = 0;
+			currentLevel = 1;
+			masteryMeter.transform.GetChild (1).transform.GetChild (1).GetComponent<Text> ().text = "Mastery 0%";
+			GameplayPage.SetActive (true);
+			winPage.SetActive (false);
+			foreach (Term x in listOfPOSTerms) {
+				x.mastery = 0;
+			}
+		}
 		gameState = GameState.Challenge;
 	}
 

@@ -38,7 +38,7 @@ public class Timer1 : MonoBehaviour {
         timerMat.SetFloat("_Angle", Mathf.Lerp(-3.14f, 3.14f, normTime));
         //timerMat.SetColor("_Color", Color.Lerp(colorsToLerp[1], colorsToLerp[0], (float)(timeLeft/amtOfSeconds)));
       }
-      thisText.text = ((int)(timeLeft+1)).ToString();
+      thisText.text = "Time Left:\n" + ((int)(timeLeft+1)).ToString();
       if(timeLeft < 0f){
         timesUp = true;
       } 
