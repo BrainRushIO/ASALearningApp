@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour {
 			break;
 		case GameState.Challenge :
 			if (Input.GetKeyDown(KeyCode.Space)){ //when boat has been rotated
-				gameState = GameState.SetRound;
+				gameState = GameState.Config;
 				challengePage.SetActive(false);
 				GameplayPage.SetActive(true);
 			}
