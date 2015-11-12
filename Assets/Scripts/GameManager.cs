@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	//Manages the Points of Sail Module
-	public enum GameState {Idle, Review, Instructions, TestPage, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen, Challenge};
+	public enum GameState {Idle, Instructions, TestPage, Config, ImageLoad, Intro, SetRound, Playing, CheckAnswer, WrongAnswer, CorrectAnswer, WinScreen, Challenge};
 	public GameState gameState;
 	public List<Term> listOfPOSTerms,tempListPointTerms,randomListPoints;
 	List<pointOfSail> allPoints;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 	public AudioSource wrong, correct, beep, waterPaddle;
 	public GameObject circle1, circle2;
 
-	public GameObject IdlePage, ReviewPage,TestPage, InstructionsPage, GameplayPage, winPage, challengePage;
+	public GameObject IdlePage, TestPage, InstructionsPage, GameplayPage, winPage, challengePage;
 	GameObject currentPage;
 
 	public TextAsset pointsOfSailTxt;

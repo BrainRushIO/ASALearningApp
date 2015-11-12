@@ -7,13 +7,7 @@ public class posAnimState : MonoBehaviour {
 	public Animator boatAnim;
 	public GameManager gameManager;
 	public Text displayPOS, displayPOS2; 
-
-	// Use this for initialization
-	void Start () {
-
-	}
 	
-	// Update is called once per frame
 	void Update () {
 
 		//Cast ray at point of mouse click
@@ -23,7 +17,7 @@ public class posAnimState : MonoBehaviour {
 			RaycastHit hit;
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out hit, 1000.0f)){
-
+				print ("HIT OBJ " + hit.collider.gameObject.name);
 				//checks which point of sail object was clicked for animation states
 				switch(hit.collider.gameObject.name){
 
