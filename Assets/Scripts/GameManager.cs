@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour {
 				thisColorChange.enabled = true;
 				youbeatlevel2.text = "you beat level 2";
 			}
-			winPercentage.text = "Your score is " + Mathf.Ceil((float)(numberCorrect/numberWrong)*100)+"%";
+			winPercentage.text = "Your score is " + Mathf.Ceil((float)(numberCorrect/(numberWrong+numberCorrect))*100)+"%";
 			break;
 		}
 	}
@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 	void AnswerWrong(){
-		numberWrong--;
+		numberWrong++;
 		circle2.SetActive(false);
 		circle1.SetActive(true);
 		wrong.Play ();
@@ -292,18 +292,18 @@ public class GameManager : MonoBehaviour {
 		IdlePage.SetActive (false);
 		GameplayPage.SetActive (false);
 		challengePage.SetActive (true);
+		winPage.SetActive (false);
+
 		currentLevel = 1;
 		numberWrong = 0;
 		numberCorrect = 0;
-		if (gameState == GameState.Config) {
+		if (gameState == GameState.WinScreen) {
 			numberWrong = 0;
 			numberCorrect = 0;
 			currMastery = 0;
 			masteryMeter.value = 0;
 			currentLevel = 1;
 			masteryMeter.transform.GetChild (1).transform.GetChild (1).GetComponent<Text> ().text = "Mastery 0%";
-			GameplayPage.SetActive (true);
-			winPage.SetActive (false);
 			foreach (Term x in listOfPOSTerms) {
 				x.mastery = 0;
 			}
