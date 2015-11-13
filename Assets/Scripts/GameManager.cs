@@ -58,13 +58,7 @@ public class GameManager : MonoBehaviour {
 
 	void Update () 
 	{
-//		if (Input.GetKeyDown (KeyCode.A)) {
-//			numberWrong = 1;
-//			numberCorrect = 1;
-//			masteryMeter.value = 1;
-//			GameplayPage.SetActive(false);
-//			winPage.SetActive(true);
-//		}
+
 		if (isCameraRotating) {
 			float fracJourney = (Time.time - lerpTime)/ lerpDuration;
 			if (fracJourney > .99f) {
@@ -102,6 +96,8 @@ public class GameManager : MonoBehaviour {
 			}
 			break;
 		case GameState.Config :
+			numberWrong = 0;
+			numberCorrect = 0;
 			directionOfWind = new Vector3(0,0,1f);
 			allPoints = new List<pointOfSail>();
 			allPoints = TextParser.Parse(pointsOfSailTxt);
@@ -188,7 +184,7 @@ public class GameManager : MonoBehaviour {
 				thisColorChange.enabled = true;
 				youbeatlevel2.text = "you beat level 2";
 			}
-			winPercentage.text = "Your score is " + Mathf.Ceil((float)(numberCorrect/(numberWrong+numberCorrect))*100)+"%";
+			winPercentage.text = "Your score is " + Mathf.Ceil(((float)numberCorrect/((float)numberWrong+(float)numberCorrect))*100)+"%";
 			break;
 		}
 	}
@@ -202,7 +198,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	void InitiateTerm(){
-		currentQuestion.text = "Rotate the boat to " + randomListPoints[currIndex].pointOfSailAnswer.Replace("|"," ");
+		currentQuestion.text = "Turn the boat to " + randomListPoints[currIndex].pointOfSailAnswer.Replace("|"," ");
 		timer.Reset(25f);
 	}
 	void WinRound(){
@@ -295,11 +291,7 @@ public class GameManager : MonoBehaviour {
 		winPage.SetActive (false);
 
 		currentLevel = 1;
-		numberWrong = 0;
-		numberCorrect = 0;
 		if (gameState == GameState.WinScreen) {
-			numberWrong = 0;
-			numberCorrect = 0;
 			currMastery = 0;
 			masteryMeter.value = 0;
 			currentLevel = 1;
