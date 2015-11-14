@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
 	public TextAsset pointsOfSailTxt;
 	public Slider masteryMeter;
 	public Text youbeatlevel2;
+	public Text endOfLevel2Text;
 	public Text currentQuestion;
 	public Text wrongAnswerText;
 	public Text correctText;
@@ -183,6 +184,7 @@ public class GameManager : MonoBehaviour {
 				thisBreatheAnimation.enabled = true;
 				thisColorChange.enabled = true;
 				youbeatlevel2.text = "you beat level 2";
+				endOfLevel2Text.text = "Click here to play level 2 again";
 			}
 			winPercentage.text = "Your score is " + Mathf.Ceil(((float)numberCorrect/((float)numberWrong+(float)numberCorrect))*100)+"%";
 			break;
