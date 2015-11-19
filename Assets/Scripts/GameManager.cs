@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
 	public Vector3 directionOfWind = new Vector3 (1f,0,1f);
 	public AudioSource wrong, correct, beep, waterPaddle;
 	public GameObject circle1, circle2;
+	bool clickedStart;
 
 	public GameObject IdlePage, TestPage, InstructionsPage, GameplayPage, winPage, challengePage;
 	GameObject currentPage;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour {
 	public TextAsset pointsOfSailTxt;
 	public Slider masteryMeter;
 	public Text youbeatlevel2;
+	public Text endOfLevel2Text;
 	public Text currentQuestion;
 	public Text wrongAnswerText;
 	public Text correctText;
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour {
 	public string currAnimState;
 
 	public static GameManager s_instance;
+
 
 	void Awake() {
 		if (s_instance == null) {
@@ -70,7 +73,8 @@ public class GameManager : MonoBehaviour {
 		}
 		switch (gameState) {
 		case GameState.Idle :
-			if (Input.GetKeyDown(KeyCode.Space)){
+			if (clickedStart){
+				clickedStart = false;	
 				IdlePage.SetActive(false);
 				TestPage.SetActive(true);
 				gameState = GameState.TestPage;
@@ -183,6 +187,7 @@ public class GameManager : MonoBehaviour {
 				thisBreatheAnimation.enabled = true;
 				thisColorChange.enabled = true;
 				youbeatlevel2.text = "you beat level 2";
+				endOfLevel2Text.text = "Click here to play level 2 again";
 			}
 			winPercentage.text = "Your score is " + Mathf.Ceil(((float)numberCorrect/((float)numberWrong+(float)numberCorrect))*100)+"%";
 			break;
@@ -230,6 +235,10 @@ public class GameManager : MonoBehaviour {
 		timer.timesUp = true;
 		timer.pause = true;
 		DisplayFeedbackText();
+	}
+
+	public void ClickStart () {
+		clickedStart = true;
 	}
 
 	void DisplayFeedbackText () {
