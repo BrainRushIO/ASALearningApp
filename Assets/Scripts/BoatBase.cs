@@ -80,8 +80,12 @@ public class BoatBase : MonoBehaviour {
 	void POSMastRotation() {
 
 		//handles sail blend shape, jibes, and mast rotation
-		
-		lastAngleWRTWind = angleWRTWind;
+		print (angleWRTWind + " ANGLE WRT WIND");
+		if (angleWRTWind > 182) {
+			lastAngleWRTWind = angleWRTWind;
+		} else if (angleWRTWind < 178) {
+			lastAngleWRTWind = angleWRTWind;
+		}
 		directionWindComingFrom = WindManager.s_instance.directionOfWind;
 		
 		boatDirection = transform.forward;
@@ -112,6 +116,19 @@ public class BoatBase : MonoBehaviour {
 		//get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
 		if(angleWRTWind > 182 || angleWRTWind < 178) {
 			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
+		}
+
+		if (angleWRTWind ==180 && GameManager.s_instance.hasClickedRun) {
+			GetComponent<Animator>().enabled = false;
+			print(lastAngleWRTWind);
+
+			if (lastAngleWRTWind > 180) {
+				blendShape.SetBlendShapeWeight(0,0f);
+			}
+			else if (lastAngleWRTWind < 180) {
+				blendShape.SetBlendShapeWeight(0,100f);
+
+			}
 		}
 			
 			
