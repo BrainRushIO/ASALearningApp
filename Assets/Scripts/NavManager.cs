@@ -95,7 +95,7 @@ public class NavManager : MonoBehaviour {
 
 				gameState = GameState.Gameplay;
 				NavBoatControl.s_instance.canMove = true;
-				//NavBoatControl.s_instance.GetComponent<GhostPathRecorder>().StartRecording();
+				NavBoatControl.s_instance.GetComponent<GhostPathRecorder>().StartRecording();
 				gamePlayPage.SetActive(true);
 				beep.Play();
 				StartClock();

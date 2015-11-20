@@ -37,13 +37,21 @@ public class TestLerp : MonoBehaviour {
 			// Lerp Positions
 			thisTransform.position = Vector3.Lerp( currentStartPos, currentEndPos, timer/sampleRate );
 			thisTransform.rotation = Quaternion.Lerp( currentStartRot, currentEndRot, timer/sampleRate );
+
+			timer += Time.deltaTime;
 		}
 	}
 
 	void FindAttributes() {
 		GhostPathRecorder temp = GameObject.FindObjectOfType<GhostPathRecorder>();
-		if( temp == null )
+		if( temp == null ) {
 			Debug.LogError( "TestLerp coulnd't find a GhostPathRecorder in he scene." );
+			return;
+		}
+		if( temp.recordedPositions.Count < 1 || temp.recordedRotations.Count < 1 ) {
+			Debug.LogError( "The GhostPathRecorder that TestLerp found has too little sampled positions/rotations to work." );
+			return;
+		}
 
 		positions = temp.recordedPositions;
 		rotations = temp.recordedRotations;
@@ -51,6 +59,10 @@ public class TestLerp : MonoBehaviour {
 
 		thisTransform.position = positions[0];
 		thisTransform.rotation = rotations[0];
+		currentStartPos = positions[0];
+		currentEndPos = positions[1];
+		currentStartRot = rotations[0];
+		currentEndRot = rotations[1];
 
 		isMoving = true;
 		findAttributes = false;
