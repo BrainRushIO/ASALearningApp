@@ -83,24 +83,22 @@ public class NavManager : MonoBehaviour {
 		case GameState.Instructions :
 			if (Input.GetKeyDown(KeyCode.Space)){
 				instructionsPage.SetActive(false);
-				Camera.main.GetComponent<HoverFollowCam>().enabled = false;
-				Camera.main.GetComponent<Cinematographer>().RollCamera();
+			//	Camera.main.GetComponent<HoverFollowCam>().enabled = false;
+//Camera.main.GetComponent<Cinematographer>().RollCamera();
 				gameState = GameState.CameraPan;
 			}
 			break;
 		case GameState.CameraPan: 
-			if (hasFinishedCameraPanning){
 				instructionsPage.SetActive(false);
 				Camera.main.GetComponent<HoverFollowCam>().enabled = true;
 				NavBoatControl.s_instance.arrow.SetActive(true);
 
 				gameState = GameState.Gameplay;
 				NavBoatControl.s_instance.canMove = true;
-				NavBoatControl.s_instance.GetComponent<GhostPathRecorder>().StartRecording();
+				//NavBoatControl.s_instance.GetComponent<GhostPathRecorder>().StartRecording();
 				gamePlayPage.SetActive(true);
 				beep.Play();
 				StartClock();
-			}
 
 			break;
 		case GameState.Gameplay :
