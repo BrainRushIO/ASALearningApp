@@ -113,6 +113,13 @@ public class BoatBase : MonoBehaviour {
 		if(angleWRTWind > 182 || angleWRTWind < 178) {
 			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
 		}
+
+		if (angleWRTWind > 182 && angleWRTWind < 185) {
+			blendShape.SetBlendShapeWeight(0,100f);
+		}
+		if (angleWRTWind < 178 && angleWRTWind > 175) {
+			blendShape.SetBlendShapeWeight(0,100f);
+		}
 			
 			
 	}
