@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour {
 	int totalMastery;
 	int numberCorrect, numberWrong;
 
+	public bool hasClickedRun;
+
 	public ColorChange thisColorChange;
 	public BreatheAnimation thisBreatheAnimation;
 

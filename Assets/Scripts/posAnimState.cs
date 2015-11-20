@@ -13,11 +13,12 @@ public class posAnimState : MonoBehaviour {
 		//Cast ray at point of mouse click
 		if (Input.GetButtonDown("Fire1")) 
 		{
+			boatAnim.enabled = true;
 			Ray ray;
 			RaycastHit hit;
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out hit, 1000.0f)){
-				print ("HIT OBJ " + hit.collider.gameObject.name);
+				GameManager.s_instance.hasClickedRun = false;
 				//checks which point of sail object was clicked for animation states
 				switch(hit.collider.gameObject.name){
 
@@ -58,6 +59,7 @@ public class posAnimState : MonoBehaviour {
 					displayPOS2.text = "The point of sail between a beam reach and a run (~135 degrees)";
 					break;
 				case "Run":
+					GameManager.s_instance.hasClickedRun = true;
 					boatAnim.SetTrigger("Run");
 					gameManager.currAnimState = "Run";
 					displayPOS.text = "Run - the point of sail on which the wind is aft (180 degrees)";
