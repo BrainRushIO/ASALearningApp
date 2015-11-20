@@ -46,21 +46,16 @@ public class BoatBase : MonoBehaviour {
 		}
 
 		if (!isJibing) {
-
 //			get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
-
 			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
 		
-		}
-		
-		else if (isJibing) {
+		} else if (isJibing) {
 			float percentageLerp = (Time.time - lerpTimer)/lerpDuration;
 			mast.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, percentageLerp);
 			if (percentageLerp > .98) {
 				mast.transform.rotation = Quaternion.Lerp(lerpStart, lerpEnd, 1);
 				isJibing = false;
 			}
-			
 		}
 
 		//TODO replace euler angle conditions with WRT to wind conditions in the case of variable wind
@@ -73,71 +68,9 @@ public class BoatBase : MonoBehaviour {
 			blendShape.SetBlendShapeWeight(0,blendFloatValue);
 			
 		}
-		
-
-	}
-
-	void POSMastRotation() {
-
-		//handles sail blend shape, jibes, and mast rotation
-		print (angleWRTWind + " ANGLE WRT WIND");
-		if (angleWRTWind > 182) {
-			lastAngleWRTWind = angleWRTWind;
-		} else if (angleWRTWind < 178) {
-			lastAngleWRTWind = angleWRTWind;
-		}
-		directionWindComingFrom = WindManager.s_instance.directionOfWind;
-		
-		boatDirection = transform.forward;
-		angleWRTWind = Vector3.Angle(boatDirection,directionWindComingFrom);
-		blendFloatValue = 100;
-		if (transform.rotation.eulerAngles.y > 180f ) {
-			angleWRTWind = 360-angleWRTWind;
-			blendFloatValue = 0;
-		}
-		
-		if (float.IsNaN(angleWRTWind)) {
-			angleWRTWind=0;
-		}
-		if ((angleWRTWind > 182 && lastAngleWRTWind < 178 
-		     && angleWRTWind <190)) {
-			if (lastAngleWRTWind!=0){
-//				Jibe (-1f);
-			}
-		}
-		if(angleWRTWind < 182 && lastAngleWRTWind > 178
-		   && angleWRTWind > 170) {
-			if (lastAngleWRTWind!=0){
-//				Jibe (1f);
-			}
-		}
-		
-	
-		//get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
-		if(angleWRTWind > 182 || angleWRTWind < 178) {
-			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
-		}
-
-		if (angleWRTWind ==180 && GameManager.s_instance.hasClickedRun) {
-			GetComponent<Animator>().enabled = false;
-			print(lastAngleWRTWind);
-
-			if (lastAngleWRTWind > 180) {
-				blendShape.SetBlendShapeWeight(0,0f);
-			}
-			else if (lastAngleWRTWind < 180) {
-				blendShape.SetBlendShapeWeight(0,100f);
-
-			}
-		}
-			
-			
 	}
 
 	void Update() {
-		if (rotateMast) {
-			POSMastRotation();
-		}
 	}
 
 	protected void Jibe(float negative) {
