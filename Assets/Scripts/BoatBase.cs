@@ -48,7 +48,6 @@ public class BoatBase : MonoBehaviour {
 		if (!isJibing) {
 
 //			get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
-
 			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
 		
 		}
@@ -99,23 +98,17 @@ public class BoatBase : MonoBehaviour {
 		if (float.IsNaN(angleWRTWind)) {
 			angleWRTWind=0;
 		}
-		if ((angleWRTWind > 182 && lastAngleWRTWind < 178 
-		     && angleWRTWind <190)) {
-			if (lastAngleWRTWind!=0){
-//				Jibe (-1f);
-			}
-		}
-		if(angleWRTWind < 182 && lastAngleWRTWind > 178
-		   && angleWRTWind > 170) {
-			if (lastAngleWRTWind!=0){
-//				Jibe (1f);
-			}
-		}
+	
 		
 	
 		//get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
-		if(angleWRTWind > 182 || angleWRTWind < 178) {
-			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
+		if (angleWRTWind > 224f || angleWRTWind < 136) {
+			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.25f);
+
+		}
+
+		else if(angleWRTWind > 182 || angleWRTWind < 178) {
+			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.4f);
 		}
 
 		if (angleWRTWind ==180 && GameManager.s_instance.hasClickedRun) {
@@ -141,7 +134,6 @@ public class BoatBase : MonoBehaviour {
 	}
 
 	protected void Jibe(float negative) {
-		print ("JIBE");
 		isJibing = true;
 		lerpTimer = Time.time;
 		lerpStart = Quaternion.Inverse(mast.transform.localRotation);
