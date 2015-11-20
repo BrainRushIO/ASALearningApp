@@ -7,7 +7,7 @@ public class GhostPathRecorder : MonoBehaviour {
 	public float sampleRate = 0.25f;
 	public bool isRecording = false;
 
-	private List<Vector3> recordedPositions;
+	public List<Vector3> recordedPositions;
 	public List<Quaternion> recordedRotations;
 	private Transform thisTransform;
 	private float timer;
