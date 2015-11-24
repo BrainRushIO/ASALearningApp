@@ -300,6 +300,7 @@ public class GameManager : MonoBehaviour {
 		GameplayPage.SetActive (false);
 		challengePage.SetActive (true);
 		winPage.SetActive (false);
+		Camera.main.GetComponent<QuaternionLerp>().StartLerp(5f);
 
 		currentLevel = 1;
 		if (gameState == GameState.WinScreen) {
