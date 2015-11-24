@@ -102,27 +102,27 @@ public class BoatBase : MonoBehaviour {
 		
 	
 		//get the boats z rotation and as a constant value for the start and end quaternions of the lerp to influence the lerp
-		if (angleWRTWind > 224f || angleWRTWind < 136) {
-			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.25f);
+//		if (angleWRTWind > 224f || angleWRTWind < 136) {
+//			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.25f);
+//
+//		}
 
+		if(angleWRTWind > 182 || angleWRTWind < 178) {
+			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.5f);
 		}
 
-		else if(angleWRTWind > 182 || angleWRTWind < 178) {
-			mast.transform.localRotation = Quaternion.Lerp (Quaternion.identity, Quaternion.Inverse(transform.localRotation), 0.4f);
-		}
-
-		if (angleWRTWind ==180 && GameManager.s_instance.hasClickedRun) {
-			GetComponent<Animator>().enabled = false;
-			print(lastAngleWRTWind);
-
-			if (lastAngleWRTWind > 180) {
-				blendShape.SetBlendShapeWeight(0,0f);
-			}
-			else if (lastAngleWRTWind < 180) {
-				blendShape.SetBlendShapeWeight(0,100f);
-
-			}
-		}
+//		if (angleWRTWind ==180 && GameManager.s_instance.hasClickedRun) {
+//			GetComponent<Animator>().enabled = false;
+//			print(lastAngleWRTWind);
+//
+//			if (lastAngleWRTWind > 180) {
+//				blendShape.SetBlendShapeWeight(0,0f);
+//			}
+//			else if (lastAngleWRTWind < 180) {
+//				blendShape.SetBlendShapeWeight(0,100f);
+//
+//			}
+//		}
 			
 			
 	}
